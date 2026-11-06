@@ -7,280 +7,395 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="Mi iPad 360">
 <meta name="format-detection" content="telephone=no">
-<title>Mi iPad 360 — Dashboard</title>
+<title>Mi iPad 360 · Dashboard 2.0</title>
 <style>
+/* Estilos sin Grid, variables CSS, frameworks ni dependencias: WebKit de iOS 9 */
 * { -webkit-box-sizing:border-box; box-sizing:border-box; }
-html { background:#0c1322; }
-body { margin:0; padding:0; font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; background:#0c1322; color:#f2f6ff; -webkit-text-size-adjust:100%; }
-button, input { font-family:inherit; font-size:16px; }
-button { cursor:pointer; -webkit-appearance:none; appearance:none; border:0; -webkit-tap-highlight-color:transparent; }
-button:active { opacity:.72; }
-#app { margin:0 auto; max-width:1100px; padding:21px 22px 50px; }
-.header { border-bottom:1px solid #263247; padding-bottom:13px; margin-bottom:18px; }
-.brand { font-size:24px; letter-spacing:-.5px; font-weight:700; }
-.brand small { font-weight:400; font-size:13px; color:#8ba0bd; display:block; letter-spacing:.1px; margin-top:3px; }
-.pill { display:inline-block; color:#a9e6d8; border:1px solid #2d655e; border-radius:22px; font-size:12px; padding:5px 11px; float:right; margin-top:4px; }
+html { background:#0b1423; }
+body { margin:0; background:#0b1423; color:#f1f6ff; font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif; -webkit-text-size-adjust:100%; }
+body.theme-oceano { background:#0b1423; color:#f1f6ff; }
+body.theme-ambar { background:#191510; color:#fff6e6; }
+body.theme-violeta { background:#161125; color:#f9f3ff; }
+body.theme-claro { background:#edf3f8; color:#17263a; }
+button,input,textarea,select { font-family:inherit; font-size:16px; }
+button { border:0; -webkit-appearance:none; appearance:none; cursor:pointer; -webkit-tap-highlight-color:rgba(0,0,0,0); }
+button:active { opacity:.78; }
+a { color:#59dfca; }
+#app { max-width:1120px; margin:0 auto; padding:18px 22px 38px; }
+#heading { border-bottom:1px solid #293951; padding:4px 0 13px; margin-bottom:13px; }
+.brand { font-size:25px; font-weight:700; letter-spacing:-.5px; }
+.brand small { display:block; font-size:13px; font-weight:400; color:#a8bbd2; letter-spacing:0; margin-top:4px; }
+.brandtag { float:right; font-size:12px; letter-spacing:.3px; padding:7px 12px; border:1px solid #356b64; color:#95e7d7; border-radius:20px; margin-top:5px; }
 .clear { clear:both; }
-.nav { overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; padding:0 0 8px; margin-bottom:16px; }
-.nav button { border-radius:10px; padding:12px 15px; background:#1b273b; color:#c1d0e4; margin-right:6px; font-size:15px; }
-.nav button.active { background:#35c3a4; color:#08201b; font-weight:700; }
+#nav { white-space:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch; padding:3px 0 9px; margin-bottom:9px; }
+#nav button { color:#d8e5f5; background:#24334b; border-radius:10px; padding:12px 15px; min-height:44px; margin-right:6px; font-size:15px; font-weight:600; }
+#nav button.active { background:#37c9ad; color:#082a23; }
 .panel { display:none; }
 .panel.active { display:block; }
-.card { background:#152136; border:1px solid #26364f; border-radius:17px; padding:21px; margin-bottom:15px; }
-.card h2 { margin:0 0 12px; font-size:23px; }
-.card h3 { font-size:18px; margin:0 0 9px; }
-.muted { color:#a2b4d0; }
-.eyebrow { color:#72d8c3; letter-spacing:1.6px; text-transform:uppercase; font-size:12px; font-weight:700; margin-bottom:9px; }
-.bigclock { font-size:100px; line-height:1.08; font-weight:300; letter-spacing:-4px; color:white; white-space:nowrap; font-variant-numeric:tabular-nums; }
-.ampm { font-size:24px; letter-spacing:0; margin-left:8px; color:#69d7bf; }
-.bigdate { font-size:25px; margin:12px 0 5px; color:#becce1; }
-.fullclock { text-align:center; padding:64px 10px; }
-.fullclock .bigclock { font-size:114px; }
-.fullclock .bigdate { font-size:29px; }
-.tiles { margin:0 -7px; }
-.tile { background:#1a2a42; border:1px solid #304762; color:#f4f8ff; text-align:left; width:31%; width:calc(33.333% - 14px); margin:7px; display:inline-block; vertical-align:top; padding:18px; min-height:114px; border-radius:14px; }
-.tile .symbol { font-size:28px; display:block; margin-bottom:8px; }
-.tile .name { display:block; font-size:18px; font-weight:700; }
-.tile .descr { display:block; font-size:13px; color:#9bb0cd; margin-top:5px; }
-.two-col { margin:0 -7px; }
-.half { display:inline-block; vertical-align:top; width:calc(50% - 14px); margin:7px; }
-.button { background:#35c3a4; color:#0c2620; font-size:17px; font-weight:700; padding:13px 20px; border-radius:10px; margin:4px 7px 4px 0; min-height:48px; }
-.button.subtle { background:#283b55; color:#f2f6ff; }
-.button.danger { background:#523540; color:#ffccd2; }
-.button.small { padding:8px 14px; font-size:15px; min-height:40px; }
-.timer { text-align:center; font-weight:300; font-size:105px; letter-spacing:-4px; margin:12px 0 18px; font-variant-numeric:tabular-nums; }
-.timerlabel { font-size:20px; color:#9be2d2; text-align:center; }
+.card { background:#17253a; border:1px solid #31425a; border-radius:17px; padding:20px; margin-bottom:14px; }
+.card h2 { font-size:23px; margin:0 0 10px; }
+.card h3 { font-size:18px; margin:0 0 12px; }
+.kicker { text-transform:uppercase; letter-spacing:1.8px; font-size:12px; color:#70e3cf; font-weight:700; margin:0 0 9px; }
+.muted { color:#b3c2d7; }
+.tiny { font-size:12px; }
 .center { text-align:center; }
-.input { display:block; width:100%; background:#0e1a2e; color:#f4f8ff; border:1px solid #445671; padding:13px; border-radius:9px; font-size:17px; margin:8px 0 12px; }
-.input:focus { outline:2px solid #38bfa4; }
-.task-row { border-top:1px solid #2a3a52; padding:11px 0; overflow:hidden; }
-.task-row .check { float:left; width:28px; height:28px; margin-right:11px; border-radius:8px; background:#2f435e; border:1px solid #75849a; color:white; font-size:18px; }
-.task-row .check.done { background:#35c3a4; color:#08201b; }
-.task-row .task-text { display:inline-block; max-width:70%; padding-top:3px; word-wrap:break-word; }
-.task-row .task-text.done { text-decoration:line-through; opacity:.55; }
-.task-row .remove { float:right; color:#fdadb7; background:#3c2936; border-radius:9px; padding:7px 11px; font-size:14px; }
-.calhead { text-align:center; font-size:24px; font-weight:700; padding:4px; }
+.inline-half { width:calc(50% - 12px); display:inline-block; vertical-align:top; margin:5px; }
+.box-row { margin:0 -5px; }
+.btn { background:#3ad0b0; color:#0b2923; border-radius:11px; min-height:46px; padding:11px 15px; margin:4px 6px 4px 0; font-size:16px; font-weight:700; }
+.btn.secondary { background:#31445f; color:#f7fbff; }
+.btn.danger { background:#613742; color:#ffe3e6; }
+.btn.outline { background:transparent; border:1px solid #536c88; color:#f3f8ff; }
+.btn.small { min-height:41px; font-size:14px; padding:10px 13px; }
+.btn:disabled { opacity:.45; }
+.input { display:block; background:#0e1b2d; border:1px solid #536983; color:#f8fbff; width:100%; border-radius:10px; padding:12px; margin:8px 0 12px; min-height:44px; }
+textarea.input { line-height:1.5; resize:vertical; }
+.label { display:block; font-size:14px; color:#b7cce1; font-weight:600; margin-top:10px; }
+.fieldrow { margin:0 -6px; }
+.field { display:inline-block; vertical-align:top; margin:0 6px; width:calc(50% - 16px); }
+.field-third { display:inline-block; vertical-align:top; margin:0 6px; width:calc(33.333% - 16px); }
+.tinyhint { border-left:3px solid #3ac9ad; background:#253750; padding:12px 14px; border-radius:7px; color:#d7e8f7; font-size:14px; line-height:1.45; margin:12px 0; }
+/* Relojes: números enormes, con ancho adaptativo por script */
+.hero { text-align:center; padding:23px 10px 25px; }
+.clockface { display:inline-block; white-space:nowrap; font-size:148px; line-height:1.05; font-weight:300; letter-spacing:-5px; font-variant-numeric:tabular-nums; color:#fff; max-width:100%; }
+.clockface .clock-ampm { font-size:25px; letter-spacing:0; margin-left:7px; color:#70dfc8; }
+.clockdate { font-size:25px; color:#c5d5ea; margin:12px 0; }
+.hero-buttons { margin-top:19px; }
+/* Pantalla de reloj autónoma y sin menú */
+#reloj .clockcard { text-align:center; padding:37px 10px 40px; min-height:360px; }
+#reloj .clockface { font-size:187px; }
+#reloj .clockdate { font-size:29px; }
+body.focus #app { max-width:none; padding:0; }
+body.focus #heading, body.focus #nav, body.focus #footer { display:none; }
+body.focus .panel { display:none !important; }
+body.focus #reloj { display:block !important; }
+body.focus #reloj .clockcard { border:0; border-radius:0; margin:0; background:transparent; min-height:100vh; padding:20vh 12px 20px; }
+body.focus #reloj .clockface { font-size:265px; }
+body.focus #reloj .clockdate { font-size:34px; }
+body.focus #reloj .kicker { font-size:14px; }
+body.focus #exit-focus { display:inline-block; }
+body.focus #clock-focus { display:none; }
+#exit-focus { display:none; }
+/* Atajos */
+.tiles { margin:0 -7px; }
+.tile { display:inline-block; vertical-align:top; width:calc(25% - 14px); margin:7px; min-height:99px; border-radius:13px; border:1px solid #3c526e; background:#243853; color:#f5faff; text-align:left; padding:15px; }
+.tile strong { display:block; font-size:16px; margin:4px 0 4px; }
+.tile small { font-size:12px; color:#bdcfe4; line-height:1.3; }
+.tile .glyph { font-size:23px; color:#85e5d3; }
+.mini-stat { font-size:17px; font-weight:600; margin:8px 0 0; }
+/* Temporizadores */
+.big-timer { text-align:center; font-size:110px; letter-spacing:-4px; font-variant-numeric:tabular-nums; font-weight:300; margin:12px 0 13px; }
+.timer-status { text-align:center; font-size:19px; color:#8de9d8; min-height:25px; }
+.progress-track { height:9px; border-radius:9px; background:#344960; margin:13px 0 16px; overflow:hidden; }
+.progress-bar { height:100%; background:#36cdb0; width:0; border-radius:9px; }
+/* Tareas, hábitos y eventos */
+.listrow { border-top:1px solid #34465c; min-height:52px; padding:9px 0; overflow:hidden; }
+.listrow .text { display:inline-block; vertical-align:middle; max-width:65%; overflow-wrap:break-word; word-wrap:break-word; padding:5px 2px; line-height:1.3; }
+.listrow .text.done { text-decoration:line-through; opacity:.55; }
+.listrow .marker { background:#334861; color:#eff7ff; width:37px; height:37px; text-align:center; border-radius:9px; font-size:20px; margin-right:9px; vertical-align:middle; }
+.listrow .marker.done { background:#39cbae; color:#102a24; }
+.listrow .remove { float:right; background:#403443; color:#ffd1d6; border-radius:9px; min-height:37px; padding:7px 11px; font-size:14px; }
+/* Calendario */
+.calhead { font-size:23px; font-weight:700; text-align:center; margin:8px 0; }
 .calendar { width:100%; border-collapse:separate; border-spacing:5px; table-layout:fixed; }
-.calendar th { color:#8da4c2; font-size:15px; height:30px; }
-.calendar td { background:#1e304a; color:#e7f0ff; text-align:center; height:57px; border-radius:9px; font-size:19px; }
-.calendar td.blank { background:transparent; }
-.calendar td.today { background:#35c3a4; color:#0d2620; font-weight:800; }
-.count-big { font-size:105px; font-weight:300; text-align:center; margin:17px 0; color:#fff; }
-.flashcard { background:#1c3348; border:1px solid #38606c; border-radius:16px; text-align:center; padding:54px 18px; margin:17px auto; min-height:240px; }
-.flashcard .question { font-size:30px; font-weight:700; }
-.flashcard .answer { color:#b4eadd; font-size:24px; line-height:1.4; margin-top:22px; display:none; }
-.footer { color:#7c93b4; font-size:12px; margin-top:20px; text-align:center; line-height:1.55; }
-.hint { background:#243348; border-left:3px solid #37c6a5; padding:13px 15px; border-radius:7px; font-size:15px; color:#cbd8e9; line-height:1.55; }
-#errors { display:none; padding:12px; color:#ffb5b5; }
-@media(max-width:800px) { #app { padding:14px 15px 32px; } .bigclock { font-size:78px; } .fullclock .bigclock { font-size:90px; } .tile { width:calc(50% - 14px); } .timer { font-size:85px; } .card { padding:16px; } .calendar td { height:47px; } }
-@media(max-width:480px) { .bigclock,.fullclock .bigclock { font-size:58px; letter-spacing:-2px; } .bigdate,.fullclock .bigdate { font-size:19px; } .tile { width:calc(100% - 14px); min-height:80px; } .half { width:calc(100% - 14px); } .timer,.count-big { font-size:65px; } .calendar td { height:38px; font-size:15px; } }
+.calendar th { color:#a4b8d2; font-size:14px; padding:6px 0; }
+.calendar td { padding:0; }
+.calendar td button { width:100%; background:#233951; border-radius:9px; color:#f3faff; min-height:57px; font-size:18px; position:relative; }
+.calendar td button.today { background:#3c806f; font-weight:700; }
+.calendar td button.marked { border:2px solid #62ddc7; }
+.calendar td button.selected { box-shadow:inset 0 0 0 2px #f9d77c; }
+.calendar td.empty { background:transparent; }
+/* Aprendizaje */
+.flashcard { min-height:230px; text-align:center; padding:46px 15px; border-radius:16px; background:#203b50; border:1px solid #457184; margin:15px 0; }
+.flashcard .question { font-size:27px; font-weight:700; }
+.flashcard .answer { display:none; font-size:23px; line-height:1.5; color:#b8efdc; margin-top:22px; }
+/* Paletas predefinidas: sin variables CSS */
+body.theme-ambar .card { background:#2c241a; border-color:#594b36; }
+body.theme-ambar #nav button,body.theme-ambar .btn.secondary { background:#58442a; }
+body.theme-ambar .btn,body.theme-ambar #nav button.active,body.theme-ambar .progress-bar,body.theme-ambar .listrow .marker.done { background:#f5ba64; color:#332211; }
+body.theme-ambar .tile,body.theme-ambar .calendar td button { background:#3b3022; border-color:#735a3b; }
+body.theme-ambar .kicker,body.theme-ambar .timer-status,body.theme-ambar .tile .glyph { color:#f5bf70; }
+body.theme-violeta .card { background:#26203b; border-color:#514573; }
+body.theme-violeta #nav button,body.theme-violeta .btn.secondary { background:#453a64; }
+body.theme-violeta .btn,body.theme-violeta #nav button.active,body.theme-violeta .progress-bar,body.theme-violeta .listrow .marker.done { background:#bb9df6; color:#211334; }
+body.theme-violeta .tile,body.theme-violeta .calendar td button { background:#322949; border-color:#655588; }
+body.theme-violeta .kicker,body.theme-violeta .timer-status,body.theme-violeta .tile .glyph { color:#c2a6ff; }
+body.theme-claro .card { background:#fff; border-color:#c7d5e4; }
+body.theme-claro #heading { border-color:#c7d5e4; }
+body.theme-claro .brand small,body.theme-claro .muted,body.theme-claro .label { color:#52677e; }
+body.theme-claro .clockface,body.theme-claro .tile,body.theme-claro .tile small { color:#17293a; }
+body.theme-claro .clockdate { color:#52677e; }
+body.theme-claro #nav button,body.theme-claro .btn.secondary { background:#d5e4ee; color:#163043; }
+body.theme-claro .btn,body.theme-claro #nav button.active,body.theme-claro .progress-bar,body.theme-claro .listrow .marker.done { background:#24a68e; color:#fff; }
+body.theme-claro .tile,body.theme-claro .calendar td button { background:#e1edf5; color:#163043; border-color:#bacbd9; }
+body.theme-claro .kicker,body.theme-claro .timer-status,body.theme-claro .tile .glyph { color:#087d6b; }
+body.theme-claro .input { background:#fff; color:#18304a; border-color:#9bb0c5; }
+body.theme-claro .tinyhint { background:#d6e8ef; color:#20374a; }
+body.theme-claro .listrow { border-color:#c5d4e5; }
+body.theme-claro .listrow .marker { background:#d1e2ef; color:#143047; }
+body.theme-claro .flashcard { background:#e4f1f5; border-color:#b4cfdc; }
+body.theme-claro .flashcard .answer { color:#176555; }
+body.theme-claro .btn.outline { color:#20374a; border-color:#8ba4b7; }
+body.theme-claro .pill { color:#206d5e; }
+body.large-text .brand { font-size:29px; }
+body.large-text .card { font-size:19px; }
+body.large-text .tile strong { font-size:19px; }
+body.large-text .clockdate { font-size:29px; }
+#footer { text-align:center; font-size:12px; color:#9eb0c4; line-height:1.5; margin:19px 0; }
+/* iPad horizontal 1024x768: prioridad al reloj y controles legibles */
+@media (max-width:1024px) {
+  #app { padding:13px 17px 30px; }
+  .tile { width:calc(25% - 14px); }
+  .clockface { font-size:142px; }
+  #reloj .clockface { font-size:166px; }
+  body.focus #reloj .clockface { font-size:255px; }
+}
+@media (max-width:800px) {
+  .tile { width:calc(50% - 14px); }
+  .clockface { font-size:115px; }
+  #reloj .clockface { font-size:140px; }
+  body.focus #reloj .clockface { font-size:220px; }
+  .big-timer { font-size:94px; }
+  .field-third { width:calc(50% - 16px); }
+  .card { padding:15px; }
+}
+@media (max-width:480px) {
+  .clockface { font-size:69px; letter-spacing:-2px; }
+  #reloj .clockface { font-size:76px; }
+  body.focus #reloj .clockface { font-size:150px; }
+  .clockface .clock-ampm { font-size:18px; }
+  .clockdate { font-size:20px; }
+  .tile { width:calc(100% - 14px); min-height:72px; }
+  .field,.field-third,.inline-half { width:calc(100% - 12px); }
+  .big-timer { font-size:68px; }
+  .calendar { border-spacing:2px; }
+  .calendar td button { min-height:40px; font-size:15px; }
+  .flashcard { padding:25px 10px; }
+}
 </style>
 </head>
-<body>
+<body class="theme-oceano">
 <div id="app">
-  <div class="header">
-    <span class="pill">Diseñado para iOS 9</span>
-    <div class="brand">Mi iPad 360 <small>Tu centro personal de productividad</small></div>
-    <div class="clear"></div>
+  <div id="heading"><span class="brandtag">iOS 9 · v2.0</span><div class="brand">Mi iPad 360<small>Tu centro personal de productividad</small></div><div class="clear"></div></div>
+  <div id="nav">
+    <button type="button" data-go="inicio" class="active">Inicio</button><button type="button" data-go="reloj">Reloj</button><button type="button" data-go="pomodoro">Pomodoro</button><button type="button" data-go="tareas">Tareas</button><button type="button" data-go="habitos">Hábitos</button><button type="button" data-go="entreno">Entreno</button><button type="button" data-go="calendario">Calendario</button><button type="button" data-go="evento">Cuenta atrás</button><button type="button" data-go="tarjetas">Aprender</button><button type="button" data-go="ajustes">Ajustes</button><button type="button" data-go="respaldo">Respaldo</button>
   </div>
-  <div class="nav" id="nav">
-    <button data-go="inicio" class="active">Inicio</button><button data-go="reloj">Reloj</button><button data-go="pomodoro">Pomodoro</button><button data-go="calendario">Calendario</button><button data-go="tareas">Tareas</button><button data-go="entreno">Entreno</button><button data-go="evento">Cuenta atrás</button><button data-go="tarjetas">Aprender</button>
-  </div>
-  <div id="errors"></div>
 
   <div class="panel active" id="inicio">
-    <div class="card center">
-      <div class="eyebrow">Panel de escritorio</div>
-      <div class="bigclock" id="home-time">--:--</div>
-      <div class="bigdate" id="home-date">Cargando fecha...</div>
-      <p class="muted">Hora del iPad · No necesita una cuenta</p>
-    </div>
-    <div class="tiles">
-      <button class="tile" data-go="reloj"><span class="symbol">◷</span><span class="name">Reloj grande</span><span class="descr">Pantalla completa</span></button><button class="tile" data-go="pomodoro"><span class="symbol">◴</span><span class="name">Pomodoro</span><span class="descr">Concentración y pausas</span></button><button class="tile" data-go="calendario"><span class="symbol">▦</span><span class="name">Calendario</span><span class="descr">Vista del mes</span></button><button class="tile" data-go="tareas"><span class="symbol">✓</span><span class="name">Mis tareas</span><span class="descr">Lista personal</span></button><button class="tile" data-go="entreno"><span class="symbol">↻</span><span class="name">Entrenamiento</span><span class="descr">Intervalos de ejercicio</span></button><button class="tile" data-go="evento"><span class="symbol">◎</span><span class="name">Cuenta regresiva</span><span class="descr">Próxima fecha especial</span></button><button class="tile" data-go="tarjetas"><span class="symbol">A+</span><span class="name">Aprender</span><span class="descr">Inglés e IA</span></button>
-    </div>
-    <div class="hint" style="margin-top:14px">Tus libros y archivos siguen disponibles desde <strong>iBooks</strong> y <strong>PDFelement</strong>. Puedes volver a ellos con el botón físico de inicio del iPad.</div>
+    <div class="card hero"><div class="kicker">Tu reloj de escritorio</div><div id="home-time" class="clockface">--:--</div><div id="home-date" class="clockdate">Cargando fecha...</div><div class="hero-buttons"><button class="btn" type="button" id="home-focus">Reloj gigante · Pantalla limpia</button><button class="btn secondary" type="button" data-go="pomodoro">Iniciar concentración</button></div></div>
+    <div class="box-row"><div class="inline-half"><div class="card"><div class="kicker">Hoy</div><div class="mini-stat" id="home-progress">0 tareas · 0 hábitos</div><p class="muted tiny" id="home-motivation">Organiza tu día a tu ritmo.</p><button class="btn small secondary" type="button" data-go="tareas">Ver tareas</button></div></div><div class="inline-half"><div class="card"><div class="kicker">Próxima fecha</div><div class="mini-stat" id="home-event">Sin eventos programados</div><p class="muted tiny" id="home-event-days">Registra un evento en Calendario.</p><button class="btn small secondary" type="button" data-go="calendario">Ver calendario</button></div></div></div>
+    <div class="tiles"><button type="button" class="tile" data-go="reloj"><span class="glyph">◷</span><strong>Reloj</strong><small>Hora gigante</small></button><button type="button" class="tile" data-go="tareas"><span class="glyph">✓</span><strong>Tareas</strong><small>Pendientes</small></button><button type="button" class="tile" data-go="habitos"><span class="glyph">◎</span><strong>Hábitos</strong><small>Progreso diario</small></button><button type="button" class="tile" data-go="entreno"><span class="glyph">↻</span><strong>Entreno</strong><small>Series e intervalos</small></button><button type="button" class="tile" data-go="tarjetas"><span class="glyph">A+</span><strong>Aprender</strong><small>Inglés y datos</small></button><button type="button" class="tile" data-go="evento"><span class="glyph">◴</span><strong>Cuenta atrás</strong><small>Fechas importantes</small></button><button type="button" class="tile" data-go="ajustes"><span class="glyph">⚙</span><strong>Personalizar</strong><small>Colores y letra</small></button><button type="button" class="tile" data-go="respaldo"><span class="glyph">⇩</span><strong>Respaldo</strong><small>Exportar datos</small></button></div>
+    <div class="tinyhint">Tus libros y PDF siguen disponibles en <strong>iBooks</strong> y <strong>PDFelement</strong> desde la pantalla principal del iPad. Este panel funciona sin cuentas ni servicios de pago.</div>
   </div>
 
-  <div class="panel" id="reloj"><div class="card fullclock">
-    <div class="eyebrow">Reloj de escritorio</div><div class="bigclock" id="big-time">--:--</div><div class="bigdate" id="big-date">Cargando...</div>
-    <p class="muted">La hora se toma del dispositivo.</p>
-  </div></div>
+  <div class="panel" id="reloj"><div class="card clockcard"><div class="kicker">Reloj de escritorio</div><div id="big-time" class="clockface">--:--</div><div id="big-date" class="clockdate">Cargando...</div><p class="muted tiny">La hora se toma del iPad.</p><button type="button" class="btn" id="clock-focus">Pantalla limpia · Ampliar</button><button type="button" class="btn secondary" id="exit-focus">Volver al panel</button></div></div>
 
-  <div class="panel" id="pomodoro"><div class="card center">
-    <div class="eyebrow">Concentración</div><h2>Temporizador Pomodoro</h2>
-    <div class="timerlabel" id="pomo-label">Trabajo · 25 minutos</div>
-    <div class="timer" id="pomo-time">25:00</div>
-    <button class="button" id="pomo-start">Iniciar</button><button class="button subtle" id="pomo-reset">Reiniciar</button>
-    <div style="margin-top:20px"><button class="button small subtle" data-pomo="25">Trabajo 25 min</button><button class="button small subtle" data-pomo="5">Descanso 5 min</button><button class="button small subtle" data-pomo="15">Descanso 15 min</button></div>
-    <p class="muted">Mantén el panel visible para comprobar el tiempo. Este temporizador no reemplaza las alarmas de la aplicación Reloj.</p>
-  </div></div>
+  <div class="panel" id="pomodoro"><div class="card center"><div class="kicker">Concentración</div><h2>Pomodoro avanzado</h2><div id="pomo-status" class="timer-status">Trabajo · Sesión 1</div><div class="big-timer" id="pomo-time">25:00</div><div class="progress-track"><div id="pomo-progress" class="progress-bar"></div></div><button type="button" class="btn" id="pomo-start">Iniciar</button><button type="button" class="btn secondary" id="pomo-reset">Reiniciar</button><button type="button" class="btn secondary" id="pomo-next">Siguiente fase</button><p class="muted" id="pomo-count">0 sesiones completadas</p><div class="fieldrow"><div class="field-third"><label class="label" for="pomo-work">Trabajo (min)</label><input class="input" id="pomo-work" type="number" min="1" max="180" value="25"></div><div class="field-third"><label class="label" for="pomo-short">Descanso (min)</label><input class="input" id="pomo-short" type="number" min="1" max="60" value="5"></div><div class="field-third"><label class="label" for="pomo-long">Descanso largo (min)</label><input class="input" id="pomo-long" type="number" min="1" max="90" value="15"></div><div class="field-third"><label class="label" for="pomo-cycle">Cada cuántas sesiones</label><input class="input" id="pomo-cycle" type="number" min="2" max="8" value="4"></div></div><button type="button" class="btn small secondary" id="pomo-config">Guardar tiempos</button><div class="tinyhint">Cuando termine una fase, sonará un aviso si el sistema lo permite. Mantén el panel abierto: los sonidos y temporizadores web no son alarmas fiables con la pantalla bloqueada.</div></div></div>
 
-  <div class="panel" id="calendario"><div class="card">
-    <div class="eyebrow">Organiza tus días</div><h2>Calendario mensual</h2>
-    <div class="center"><button class="button small subtle" id="month-prev">◀ Anterior</button><button class="button small subtle" id="month-now">Hoy</button><button class="button small subtle" id="month-next">Siguiente ▶</button></div>
-    <div id="month-name" class="calhead"></div><table class="calendar" id="cal-table"><thead><tr><th>L</th><th>M</th><th>X</th><th>J</th><th>V</th><th>S</th><th>D</th></tr></thead><tbody id="cal-body"></tbody></table>
-    <p class="muted">Es una vista mensual independiente, sin conexión con calendarios externos.</p>
-  </div></div>
+  <div class="panel" id="tareas"><div class="card"><div class="kicker">Plan del día</div><h2>Mis tareas</h2><label class="label" for="task-input">Nueva tarea</label><input class="input" id="task-input" type="text" maxlength="140" placeholder="Ej.: Revisar apuntes de Python"><button type="button" class="btn" id="task-add">Añadir tarea</button><button type="button" class="btn small secondary" id="task-clear">Quitar completadas</button><p class="muted" id="task-summary">Aún no hay tareas</p><div class="progress-track"><div id="task-progress" class="progress-bar"></div></div><div id="task-list"></div></div></div>
 
-  <div class="panel" id="tareas"><div class="card">
-    <div class="eyebrow">Mi organización</div><h2>Lista de tareas</h2>
-    <input class="input" type="text" id="task-input" maxlength="110" placeholder="Escribe una tarea...">
-    <button class="button" id="task-add">+ Añadir tarea</button>
-    <p id="task-summary" class="muted"></p><div id="task-list"></div>
-    <p class="muted">Las tareas se guardan en este navegador cuando permite almacenamiento local. No son una copia de seguridad.</p>
-  </div></div>
+  <div class="panel" id="habitos"><div class="card"><div class="kicker">Constancia</div><h2>Hábitos diarios</h2><p class="muted">Marca tus hábitos cada día. Las marcas se reinician al cambiar la fecha del iPad.</p><label class="label" for="habit-input">Nuevo hábito</label><input class="input" id="habit-input" type="text" maxlength="100" placeholder="Ej.: Leer 15 minutos"><button type="button" class="btn" id="habit-add">Agregar hábito</button><p class="muted" id="habit-summary">0 completados</p><div class="progress-track"><div id="habit-progress" class="progress-bar"></div></div><div id="habit-list"></div></div></div>
 
-  <div class="panel" id="entreno"><div class="card center">
-    <div class="eyebrow">Movimiento y ejercicio</div><h2>Entrenamiento por intervalos</h2>
-    <div class="timerlabel" id="fit-label">Listo · Trabajo 40s / Pausa 20s</div>
-    <div class="timer" id="fit-time">00:40</div>
-    <button class="button" id="fit-start">Iniciar</button><button class="button subtle" id="fit-reset">Reiniciar</button>
-    <div style="margin-top:18px"><label>Segundos de actividad <input type="number" class="input" id="fit-work" min="5" max="600" value="40"></label><label>Segundos de descanso <input type="number" class="input" id="fit-rest" min="5" max="600" value="20"></label><label>Número de rondas <input type="number" class="input" id="fit-rounds" min="1" max="99" value="5"></label></div>
-    <p class="muted">Intervalos visuales para sesiones sencillas. Para alarmas en segundo plano usa la app Reloj del iPad.</p>
-  </div></div>
+  <div class="panel" id="entreno"><div class="card center"><div class="kicker">Actividad y descanso</div><h2>Temporizador de entrenamiento</h2><div class="timer-status" id="fit-status">Actividad · Ronda 1 de 5</div><div class="big-timer" id="fit-time">00:40</div><div class="progress-track"><div id="fit-progress" class="progress-bar"></div></div><button type="button" class="btn" id="fit-start">Iniciar</button><button type="button" class="btn secondary" id="fit-reset">Reiniciar</button><button type="button" class="btn secondary" id="fit-skip">Siguiente fase</button><div class="fieldrow"><div class="field-third"><label class="label" for="fit-work">Actividad (seg)</label><input class="input" id="fit-work" type="number" min="5" max="3600" value="40"></div><div class="field-third"><label class="label" for="fit-rest">Descanso (seg)</label><input class="input" id="fit-rest" type="number" min="5" max="3600" value="20"></div><div class="field-third"><label class="label" for="fit-rounds">Rondas</label><input class="input" id="fit-rounds" type="number" min="1" max="99" value="5"></div></div><button type="button" class="btn small secondary" id="fit-config">Guardar intervalos</button><div class="tinyhint">Úsalo como apoyo visual durante el entrenamiento. Si sales de la página o bloqueas el iPad, puede dejar de sonar.</div></div></div>
 
-  <div class="panel" id="evento"><div class="card">
-    <div class="eyebrow">Fechas especiales</div><h2>Cuenta regresiva</h2>
-    <label>Nombre del evento <input type="text" class="input" id="event-title" placeholder="Por ejemplo: Viaje" maxlength="70"></label>
-    <label>Fecha del evento <input type="date" class="input" id="event-date"></label>
-    <button class="button" id="event-save">Guardar evento</button>
-    <div id="event-result" class="center" style="margin-top:18px"></div>
-  </div></div>
+  <div class="panel" id="calendario"><div class="card"><div class="kicker">Agenda personal</div><h2>Calendario con eventos</h2><div class="center"><button type="button" class="btn small secondary" id="month-prev">◀ Anterior</button><button type="button" class="btn small secondary" id="month-now">Hoy</button><button type="button" class="btn small secondary" id="month-next">Siguiente ▶</button></div><div id="month-name" class="calhead"></div><table class="calendar" aria-label="Calendario mensual"><thead><tr><th>L</th><th>M</th><th>M</th><th>J</th><th>V</th><th>S</th><th>D</th></tr></thead><tbody id="cal-body"></tbody></table><div class="tinyhint">Toca un día para seleccionarlo y completar automáticamente la fecha de un evento.</div><h3>Eventos guardados</h3><div id="cal-events"></div></div><div class="card"><h3>Agregar fecha importante</h3><label class="label" for="new-event-title">Nombre del evento</label><input class="input" id="new-event-title" type="text" maxlength="100" placeholder="Ej.: Entrevista"><label class="label" for="new-event-date">Fecha (AAAA-MM-DD)</label><input class="input" id="new-event-date" type="text" maxlength="10" placeholder="2026-12-15"><button type="button" class="btn" id="cal-event-add">Guardar evento</button><p class="muted tiny">Ejemplo de formato: 2026-12-15. No conecta con Google Calendar.</p></div></div>
 
-  <div class="panel" id="tarjetas"><div class="card center">
-    <div class="eyebrow">Aprende cada día</div><h2>Tarjetas de estudio</h2>
-    <div class="center"><button class="button small subtle" data-deck="ingles">Inglés</button><button class="button small subtle" data-deck="ia">Inteligencia artificial</button></div>
-    <p id="card-progress" class="muted"></p>
-    <div class="flashcard" id="flashcard"><div class="question" id="card-question"></div><div class="answer" id="card-answer"></div></div>
-    <button class="button" id="card-reveal">Mostrar respuesta</button><button class="button subtle" id="card-next">Siguiente ▶</button>
-    <p class="muted">Tarjetas incluidas en el archivo: no necesitas conectarte a ninguna plataforma.</p>
-  </div></div>
+  <div class="panel" id="evento"><div class="card center"><div class="kicker">Tus fechas importantes</div><h2>Cuenta regresiva</h2><p class="muted">Selecciona una fecha registrada en el calendario.</p><div id="count-list"></div><div id="count-display"></div><button type="button" class="btn secondary" data-go="calendario">Crear evento</button></div></div>
 
-  <div class="footer">Mi iPad 360 · Versión 1.0 · Diseño ligero para Safari iOS 9<br>No requiere inicio de sesión, anuncios ni servicios externos.</div>
+  <div class="panel" id="tarjetas"><div class="card center"><div class="kicker">Aprende sin distracciones</div><h2>Tarjetas de estudio</h2><div><button type="button" class="btn small secondary" data-deck="ingles">Inglés</button><button type="button" class="btn small secondary" data-deck="ia">Inteligencia artificial</button><button type="button" class="btn small secondary" data-deck="python">Python</button><button type="button" class="btn small secondary" data-deck="sql">SQL</button><button type="button" class="btn small secondary" data-deck="ml">Machine Learning</button></div><p class="muted" id="card-progress"></p><div class="flashcard"><div class="question" id="card-question"></div><div class="answer" id="card-answer"></div></div><button type="button" class="btn" id="card-reveal">Mostrar respuesta</button><button type="button" class="btn secondary" id="card-next">Siguiente ▶</button><p class="muted tiny">Tarjetas incluidas en el código. No dependen de servicios externos.</p></div></div>
+
+  <div class="panel" id="ajustes"><div class="card"><div class="kicker">Hazlo tuyo</div><h2>Personalización</h2><label class="label" for="setting-theme">Tema de colores</label><select class="input" id="setting-theme"><option value="oceano">Océano · Azul y verde</option><option value="ambar">Ámbar · Cálido</option><option value="violeta">Violeta · Suave</option><option value="claro">Claro · Alto contraste</option></select><label class="label" for="setting-font">Tamaño del texto</label><select class="input" id="setting-font"><option value="normal">Normal</option><option value="grande">Grande</option></select><label class="label" for="setting-clock">Formato de hora</label><select class="input" id="setting-clock"><option value="12">12 horas (AM/PM)</option><option value="24">24 horas</option></select><label class="label" for="setting-seconds">Mostrar segundos en el reloj</label><select class="input" id="setting-seconds"><option value="no">No</option><option value="si">Sí</option></select><label class="label" for="setting-start">Sección de inicio</label><select class="input" id="setting-start"><option value="inicio">Panel inicial</option><option value="reloj">Reloj grande</option><option value="pomodoro">Pomodoro</option><option value="tareas">Tareas</option><option value="habitos">Hábitos</option><option value="calendario">Calendario</option></select><label class="label" for="setting-sound">Aviso sonoro (si está disponible)</label><select class="input" id="setting-sound"><option value="si">Activado</option><option value="no">Desactivado</option></select><button type="button" class="btn" id="settings-save">Guardar preferencias</button><p class="muted tiny" id="settings-status"></p><div class="tinyhint">Los cambios se guardan en el navegador de este iPad cuando hay almacenamiento disponible. Una restauración o limpieza de datos podría eliminarlos.</div></div></div>
+
+  <div class="panel" id="respaldo"><div class="card"><div class="kicker">Tus datos, bajo tu control</div><h2>Exportar e importar respaldo</h2><p class="muted">Incluye tareas, hábitos, eventos, configuración y tiempos personalizados. Todo se guarda localmente: este archivo no envía datos a ningún servidor.</p><button type="button" class="btn" id="backup-generate">Generar respaldo</button><button type="button" class="btn secondary" id="backup-download">Descargar JSON (si funciona)</button><label class="label" for="backup-text">Copia este texto a Notas o a tu MacBook para guardarlo</label><textarea class="input" id="backup-text" rows="7" spellcheck="false" placeholder="Aquí aparecerá el respaldo. También puedes pegar aquí uno anterior."></textarea><button type="button" class="btn secondary" id="backup-select">Seleccionar todo el texto</button><hr style="border:0;border-top:1px solid #40516a;margin:20px 0"><h3>Restaurar datos</h3><p class="muted tiny">Pega aquí un respaldo JSON que hayas guardado antes. La restauración reemplaza las listas y preferencias actuales.</p><button type="button" class="btn danger" id="backup-import">Importar respaldo pegado</button><p id="backup-status" class="muted tiny"></p><div class="tinyhint">Antes de actualizar el dashboard, usa este respaldo si ya tienes tareas o eventos. Para importar un JSON es necesario pegar su contenido: los archivos descargados en Safari antiguo no siempre se pueden abrir directamente.</div></div></div>
+
+  <div id="footer">Mi iPad 360 · Versión 2.0 · Diseñado para Safari iOS 9.3.6<br>Sin librerías externas · Datos locales · Sin inicio de sesión</div>
 </div>
 <script>
 (function () {
   'use strict';
-  var days = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
-  var months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-  function byId(id) { return document.getElementById(id); }
-  function pad(n) { return n < 10 ? '0' + n : String(n); }
-  function changeText(id, val) { var el = byId(id); if (el) { el.textContent = val; } }
-  function storageGet(key, fallback) { try { var v = window.localStorage.getItem(key); return v === null ? fallback : v; } catch(e) { return fallback; } }
-  function storageSet(key, val) { try { window.localStorage.setItem(key,val); return true; } catch(e) { return false; } }
-  function formatDate(d) { return days[d.getDay()] + ', ' + d.getDate() + ' de ' + months[d.getMonth()] + ' de ' + d.getFullYear(); }
-  function clock() {
-    var d = new Date(), h = d.getHours(), ampm = h >= 12 ? 'PM' : 'AM';
-    var time = pad(h % 12 || 12) + ':' + pad(d.getMinutes()) + ' <span class="ampm">' + ampm + '</span>';
-    byId('home-time').innerHTML = time; byId('big-time').innerHTML = time;
-    changeText('home-date', formatDate(d)); changeText('big-date', formatDate(d));
+  var weekdays=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  var months=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var keys={tasks:'ipad360_tasks',events:'ipad360v2_events',habits:'ipad360v2_habits',prefs:'ipad360v2_prefs',pomo:'ipad360v2_pomo',fit:'ipad360v2_fit'};
+  var panels=['inicio','reloj','pomodoro','tareas','habitos','entreno','calendario','evento','tarjetas','ajustes','respaldo'];
+  var currentPage='inicio';
+  function el(id){return document.getElementById(id);}
+  function txt(id,v){var n=el(id);if(n)n.textContent=String(v);}
+  function pad(n){return n<10?'0'+n:String(n);}
+  function clamp(n,a,b){n=parseInt(n,10);return isNaN(n)?a:Math.max(a,Math.min(b,n));}
+  function trim(v){return String(v||'').replace(/^\s+|\s+$/g,'');}
+  function readStr(k,d){try{var v=window.localStorage.getItem(k);return v===null?d:v;}catch(e){return d;}}
+  function writeStr(k,v){try{window.localStorage.setItem(k,v);return true;}catch(e){return false;}}
+  function readObj(k,d){try{var v=JSON.parse(readStr(k,''));return v===null?d:v;}catch(e){return d;}}
+  function saveObj(k,v){return writeStr(k,JSON.stringify(v));}
+  function isArray(v){return Object.prototype.toString.call(v)==='[object Array]';}
+  function dayKey(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+  function parseDay(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s));if(!m)return null;var y=+m[1],mo=+m[2],da=+m[3];var d=new Date(y,mo-1,da);return d.getFullYear()===y&&d.getMonth()===mo-1&&d.getDate()===da?d:null;}
+  function dateDiff(a,b){var x=Date.UTC(a.getFullYear(),a.getMonth(),a.getDate());var y=Date.UTC(b.getFullYear(),b.getMonth(),b.getDate());return Math.round((x-y)/86400000);}
+  function fullDate(d){return weekdays[d.getDay()]+', '+d.getDate()+' de '+months[d.getMonth()]+' de '+d.getFullYear();}
+  function make(tag,cl,value){var n=document.createElement(tag);if(cl)n.className=cl;if(value!==undefined)n.textContent=String(value);return n;}
+  function clear(node){while(node.firstChild)node.removeChild(node.firstChild);}
+  function setPercent(id,n){el(id).style.width=Math.max(0,Math.min(100,n))+'%';}
+  function on(id,fn){el(id).onclick=fn;}
+  function bind(attr,fn){var a=document.getElementsByTagName('button'),i,v;for(i=0;i<a.length;i++){v=a[i].getAttribute(attr);if(v!==null){(function(v2,node){node.addEventListener('click',function(){fn(v2);},false);})(v,a[i]);}}}
+  function show(name){
+    if(panels.indexOf(name)<0)return;
+    document.body.className=document.body.className.replace(/\s*focus/g,'');
+    currentPage=name;
+    var ps=document.getElementsByClassName('panel'), nav=el('nav').getElementsByTagName('button'),i;
+    for(i=0;i<ps.length;i++)ps[i].className=ps[i].className.replace(/ active/g,'');
+    for(i=0;i<nav.length;i++)nav[i].className=nav[i].className.replace(/ active/g,'');
+    el(name).className+=' active';
+    for(i=0;i<nav.length;i++)if(nav[i].getAttribute('data-go')===name)nav[i].className+=' active';
+    if(name==='calendario')renderCal();if(name==='evento')renderCountdown();if(name==='inicio')renderHome();
+    clock();window.scrollTo(0,0);
   }
-  function page(name) {
-    var panels = document.getElementsByClassName('panel'), links = byId('nav').getElementsByTagName('button'), i;
-    for (i=0; i<panels.length; i++) panels[i].className = panels[i].className.replace(' active','');
-    for (i=0; i<links.length; i++) links[i].className = links[i].className.replace(' active','');
-    byId(name).className += ' active';
-    for (i=0; i<links.length; i++) if (links[i].getAttribute('data-go') === name) links[i].className += ' active';
-    window.scrollTo(0,0);
+  bind('data-go',show);
+
+  /* Preferencias persistentes */
+  var defaultPrefs={theme:'oceano',font:'normal',clock:'12',seconds:'no',start:'inicio',sound:'si'};
+  var prefs=readObj(keys.prefs,{});
+  if(!prefs||typeof prefs!=='object')prefs={};
+  function pref(k){return typeof prefs[k]==='string'?prefs[k]:defaultPrefs[k];}
+  function applyPrefs(){
+    var cl='theme-'+pref('theme');
+    if(pref('font')==='grande')cl+=' large-text';
+    if(document.body.className.indexOf('focus')>=0)cl+=' focus';
+    document.body.className=cl;
+    clock();
   }
-  function clickAll(attr, fn) {
-    var buttons=document.getElementsByTagName('button'), i, v;
-    for (i=0; i<buttons.length; i++) { v=buttons[i].getAttribute(attr); if (v !== null) { (function(value,el){ el.addEventListener('click',function(){fn(value);},false); })(v,buttons[i]); } }
+  function showPrefs(){
+    el('setting-theme').value=pref('theme');el('setting-font').value=pref('font');
+    el('setting-clock').value=pref('clock');el('setting-seconds').value=pref('seconds');
+    el('setting-start').value=pref('start');el('setting-sound').value=pref('sound');
   }
-  clickAll('data-go',page);
-  clock(); setInterval(clock,1000);
-
-  /* Temporizador estable: usa tiempo transcurrido y no depende de contar ticks. */
-  var pLeft=1500, pEnd=0, pRunning=false, pMins=25;
-  function renderP() { changeText('pomo-time',pad(Math.floor(pLeft/60))+':'+pad(pLeft%60)); changeText('pomo-label',(pMins===25?'Trabajo':'Descanso')+' · '+pMins+' minutos'); changeText('pomo-start',pRunning?'Pausar':'Iniciar'); }
-  function toggleP() { if(pRunning){pLeft=Math.max(0,Math.ceil((pEnd-Date.now())/1000));pRunning=false;} else {pEnd=Date.now()+pLeft*1000;pRunning=true;} renderP(); }
-  byId('pomo-start').onclick=toggleP;
-  byId('pomo-reset').onclick=function(){pRunning=false;pLeft=pMins*60;renderP();};
-  clickAll('data-pomo',function(v){pMins=parseInt(v,10);pLeft=pMins*60;pRunning=false;renderP();});
-  renderP();
-
-  /* Calendario local simple. */
-  var now = new Date(), calY=now.getFullYear(), calM=now.getMonth();
-  function renderCal() {
-    var first=new Date(calY,calM,1), n=new Date(calY,calM+1,0).getDate(), offset=(first.getDay()+6)%7, html='', date=1, r,c;
-    changeText('month-name',months[calM].charAt(0).toUpperCase()+months[calM].slice(1)+' '+calY);
-    for(r=0;r<6;r++) { html+='<tr>';
-      for(c=0;c<7;c++) { if((r===0 && c<offset)||date>n) html+='<td class="blank"></td>';
-      else { var today = calY===now.getFullYear() && calM===now.getMonth() && date===now.getDate(); html+='<td'+(today?' class="today"':'')+'>'+date+'</td>'; date++; } }
-      html+='</tr>'; if(date>n) break;
-    }
-    byId('cal-body').innerHTML=html;
+  on('settings-save',function(){var names=['theme','font','clock','seconds','start','sound'],i;for(i=0;i<names.length;i++)prefs[names[i]]=el('setting-'+names[i]).value;saveObj(keys.prefs,prefs);applyPrefs();txt('settings-status','Preferencias guardadas.');});
+  function clockHTML(d){
+    var h=d.getHours(),a='';if(pref('clock')==='12'){a=h>=12?'PM':'AM';h=h%12||12;}
+    var main=pad(h)+':'+pad(d.getMinutes())+(pref('seconds')==='si'?':'+pad(d.getSeconds()):'');
+    return main+(a?' <span class="clock-ampm">'+a+'</span>':'');
   }
-  byId('month-prev').onclick=function(){calM--;if(calM<0){calM=11;calY--;}renderCal();};
-  byId('month-next').onclick=function(){calM++;if(calM>11){calM=0;calY++;}renderCal();};
-  byId('month-now').onclick=function(){now=new Date();calM=now.getMonth();calY=now.getFullYear();renderCal();};
-  renderCal();
-
-  /* Tareas guardadas localmente. */
-  var tasks=[];
-  try { var stored=JSON.parse(storageGet('ipad360_tasks','[]')); if (Object.prototype.toString.call(stored)==='[object Array]') tasks=stored; } catch(e) { tasks=[]; }
-  function saveTasks(){ storageSet('ipad360_tasks',JSON.stringify(tasks)); }
-  function renderTasks() {
-    var target=byId('task-list'), i, row, tick, txt, remove, done=0; target.innerHTML='';
-    for(i=0;i<tasks.length;i++) { if(tasks[i].done)done++;
-      row=document.createElement('div');row.className='task-row';
-      tick=document.createElement('button');tick.className='check'+(tasks[i].done?' done':'');tick.textContent=tasks[i].done?'✓':'';
-      txt=document.createElement('span');txt.className='task-text'+(tasks[i].done?' done':'');txt.textContent=tasks[i].text;
-      remove=document.createElement('button');remove.className='remove';remove.textContent='Quitar';
-      (function(index){tick.onclick=function(){tasks[index].done=!tasks[index].done;saveTasks();renderTasks();};remove.onclick=function(){tasks.splice(index,1);saveTasks();renderTasks();};})(i);
-      row.appendChild(tick);row.appendChild(txt);row.appendChild(remove);target.appendChild(row);
-    }
-    changeText('task-summary',tasks.length ? done+' de '+tasks.length+' tareas completadas' : 'Aún no tienes tareas. Añade la primera.');
+  function fitClock(id){
+    var node=el(id),space=node.parentNode.clientWidth-20,base=id==='home-time'?148:187;
+    if(document.body.className.indexOf('focus')>=0 && id==='big-time')base=265;
+    if(window.innerWidth<=800)base=id==='home-time'?115:140;
+    if(window.innerWidth<=480)base=id==='home-time'?69:76;
+    if(document.body.className.indexOf('focus')>=0){if(window.innerWidth<=480)base=150;else if(window.innerWidth<=800)base=220;else if(window.innerWidth<=1024)base=255;}
+    if(pref('font')==='grande')base=Math.round(base*1.07);
+    node.style.fontSize=base+'px';
+    var pass=0;while(node.scrollWidth>space && pass<18){base=Math.floor(base*.92);node.style.fontSize=base+'px';pass++;}
   }
-  function addTask(){var inp=byId('task-input'),value=inp.value.replace(/^\s+|\s+$/g,'');if(!value)return;if(tasks.length>=35){alert('Máximo 35 tareas para mantener el iPad ligero.');return;}tasks.push({text:value,done:false});inp.value='';saveTasks();renderTasks();}
-  byId('task-add').onclick=addTask;
-  byId('task-input').onkeydown=function(e){e=e||window.event;if(e.keyCode===13)addTask();};
-  renderTasks();
+  function clock(){var d=new Date(),html=clockHTML(d);el('home-time').innerHTML=html;el('big-time').innerHTML=html;txt('home-date',fullDate(d));txt('big-date',fullDate(d));fitClock('home-time');fitClock('big-time');}
+  function focus(){show('reloj');document.body.className+=' focus';clock();window.scrollTo(0,0);}
+  on('home-focus',focus);on('clock-focus',focus);on('exit-focus',function(){show('reloj');});
+  if(window.addEventListener)window.addEventListener('resize',clock,false);
 
-  /* Cuenta regresiva: parseo manual para evitar diferencias entre navegadores. */
-  function parseIso(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s);if(!m)return null;var y=+m[1],mo=+m[2],d=+m[3],val=new Date(y,mo-1,d);if(val.getFullYear()!==y||val.getMonth()!==mo-1||val.getDate()!==d)return null;return val;}
-  var eventName=storageGet('ipad360_event_name',''),eventDate=storageGet('ipad360_event_date','');
-  function renderEvent(){var name=eventName,str=eventDate, target=parseIso(str), el=byId('event-result'), today=new Date();today.setHours(0,0,0,0);if(!target){el.innerHTML='<p class="muted">Guarda una fecha para ver cuántos días faltan.</p>';return;}var delta=Math.round((target.getTime()-today.getTime())/86400000);var title=document.createElement('h3'); title.textContent=name||'Tu evento';el.innerHTML='';el.appendChild(title);var count=document.createElement('div');count.className='count-big';count.textContent=Math.abs(delta);el.appendChild(count);var label=document.createElement('p');label.className='muted';label.textContent=delta>0?'Días restantes':delta===0?'¡Hoy es el día!':'Días desde la fecha';el.appendChild(label);}
-  byId('event-title').value=eventName;byId('event-date').value=eventDate;
-  byId('event-save').onclick=function(){var date=byId('event-date').value;if(!parseIso(date)){alert('Selecciona una fecha válida.');return;}eventName=byId('event-title').value;eventDate=date;storageSet('ipad360_event_name',eventName);storageSet('ipad360_event_date',eventDate);renderEvent();};
-  renderEvent();
+  /* Sonido opcional: Web Audio antiguo activado por interacción del usuario. */
+  var audioCtx=null;
+  function unlockAudio(){if(pref('sound')!=='si')return;try{var C=window.AudioContext||window.webkitAudioContext;if(C&&!audioCtx)audioCtx=new C();if(audioCtx&&audioCtx.resume)audioCtx.resume();}catch(e){}}
+  function beep(){if(pref('sound')!=='si')return;try{if(!audioCtx)return;var osc=audioCtx.createOscillator(),gain=audioCtx.createGain();osc.type='sine';osc.frequency.value=660;gain.gain.value=.12;osc.connect(gain);gain.connect(audioCtx.destination);osc.start(0);osc.stop(audioCtx.currentTime+.21);}catch(e){}}
 
-  /* Intervalos de actividad/descanso con contador de rondas. */
-  var fRunning=false,fLeft=40,fEnd=0,fPhase='work',fRound=1,fTotal=5,fW=40,fR=20,fFinished=false;
-  function fitValue(id,defaultVal,max){var n=parseInt(byId(id).value,10);return isNaN(n)?defaultVal:Math.max(5,Math.min(max,n));}
-  function renderFit(){changeText('fit-time',pad(Math.floor(fLeft/60))+':'+pad(fLeft%60));changeText('fit-label',fFinished?'¡Sesión terminada!':(fPhase==='work'?'Actividad':'Descanso')+' · Ronda '+fRound+' de '+fTotal);changeText('fit-start',fRunning?'Pausar':(fFinished?'Reiniciar e iniciar':'Iniciar'));}
-  function fitReset(){fRunning=false;fFinished=false;fPhase='work';fRound=1;fW=fitValue('fit-work',40,600);fR=fitValue('fit-rest',20,600);fTotal=Math.max(1,Math.min(99,parseInt(byId('fit-rounds').value,10)||5));fLeft=fW;renderFit();}
-  function fitToggle(){if(fFinished)fitReset();if(fRunning){fLeft=Math.max(0,Math.ceil((fEnd-Date.now())/1000));fRunning=false;}else{fEnd=Date.now()+fLeft*1000;fRunning=true;}renderFit();}
-  byId('fit-start').onclick=fitToggle;byId('fit-reset').onclick=fitReset;
-  byId('fit-work').onchange=fitReset;byId('fit-rest').onchange=fitReset;byId('fit-rounds').onchange=fitReset;
-  fitReset();
+  /* Tareas: misma clave local que la versión 1.x */
+  var rawTasks=readObj(keys.tasks,[]),tasks=isArray(rawTasks)?rawTasks:[];
+  function safeTasks(a){var o=[],i,v;for(i=0;i<a.length&&i<100;i++){v=a[i];if(v&&typeof v.text==='string'&&trim(v.text))o.push({text:trim(v.text).slice(0,140),done:!!v.done});}return o;}
+  tasks=safeTasks(tasks);
+  function saveTasks(){saveObj(keys.tasks,tasks);}
+  function addTask(){var v=trim(el('task-input').value);if(!v)return;if(tasks.length>=80){alert('Máximo 80 tareas.');return;}tasks.push({text:v.slice(0,140),done:false});el('task-input').value='';saveTasks();renderTasks();}
+  function renderTasks(){var list=el('task-list'),done=0,i;clear(list);for(i=0;i<tasks.length;i++){if(tasks[i].done)done++;var row=make('div','listrow'),b=make('button','marker'+(tasks[i].done?' done':''),tasks[i].done?'✓':''),text=make('span','text'+(tasks[i].done?' done':''),tasks[i].text),del=make('button','remove','Quitar');b.type='button';del.type='button';(function(index){b.onclick=function(){tasks[index].done=!tasks[index].done;saveTasks();renderTasks();};del.onclick=function(){tasks.splice(index,1);saveTasks();renderTasks();};})(i);row.appendChild(b);row.appendChild(text);row.appendChild(del);list.appendChild(row);}
+    txt('task-summary',tasks.length?done+' de '+tasks.length+' tareas completadas':'Añade tu primera tarea.');setPercent('task-progress',tasks.length?100*done/tasks.length:0);renderHome();}
+  on('task-add',addTask);el('task-input').onkeydown=function(e){e=e||window.event;if(e.keyCode===13)addTask();};
+  on('task-clear',function(){if(!confirm('¿Quitar todas las tareas completadas?'))return;var keep=[],i;for(i=0;i<tasks.length;i++)if(!tasks[i].done)keep.push(tasks[i]);tasks=keep;saveTasks();renderTasks();});
 
-  /* Tarjetas precargadas: sin APIs ni descargas. */
+  /* Hábitos diarios: cada marca tiene fecha, sin temporizadores en segundo plano. */
+  var rawHabits=readObj(keys.habits,[]),habits=isArray(rawHabits)?rawHabits:[];
+  function safeHabits(a){var o=[],i,h;for(i=0;i<a.length&&i<50;i++){h=a[i];if(h&&typeof h.text==='string'&&trim(h.text))o.push({text:trim(h.text).slice(0,100),day:typeof h.day==='string'?h.day:''});}return o;}
+  habits=safeHabits(habits);
+  function saveHabits(){saveObj(keys.habits,habits);}
+  function addHabit(){var v=trim(el('habit-input').value);if(!v)return;if(habits.length>=30){alert('Máximo 30 hábitos.');return;}habits.push({text:v.slice(0,100),day:''});el('habit-input').value='';saveHabits();renderHabits();}
+  function renderHabits(){var list=el('habit-list'),today=dayKey(new Date()),done=0,i;clear(list);for(i=0;i<habits.length;i++){var checked=habits[i].day===today;if(checked)done++;var row=make('div','listrow'),b=make('button','marker'+(checked?' done':''),checked?'✓':''),text=make('span','text'+(checked?' done':''),habits[i].text),del=make('button','remove','Quitar');b.type='button';del.type='button';(function(index){b.onclick=function(){habits[index].day=habits[index].day===dayKey(new Date())?'':dayKey(new Date());saveHabits();renderHabits();};del.onclick=function(){habits.splice(index,1);saveHabits();renderHabits();};})(i);row.appendChild(b);row.appendChild(text);row.appendChild(del);list.appendChild(row);}
+    txt('habit-summary',habits.length?done+' de '+habits.length+' hábitos completados hoy':'Añade un hábito para comenzar.');setPercent('habit-progress',habits.length?100*done/habits.length:0);renderHome();}
+  on('habit-add',addHabit);el('habit-input').onkeydown=function(e){e=e||window.event;if(e.keyCode===13)addHabit();};
+
+  /* Eventos y calendario: migración de la fecha de la v1 */
+  var rawEvents=readObj(keys.events,null),events=isArray(rawEvents)?rawEvents:[];
+  function safeEvents(a){var o=[],i,v;for(i=0;i<a.length&&i<100;i++){v=a[i];if(v&&typeof v.title==='string'&&parseDay(v.date))o.push({title:trim(v.title).slice(0,100)||'Evento',date:v.date});}return o;}
+  if(rawEvents===null){var oldDate=readStr('ipad360_event_date','');if(parseDay(oldDate))events=[{title:trim(readStr('ipad360_event_name',''))||'Evento',date:oldDate}];}
+  events=safeEvents(events);
+  function saveEvents(){saveObj(keys.events,events);}
+  function orderedEvents(){var copy=events.slice(0);copy.sort(function(a,b){return a.date<b.date?-1:(a.date>b.date?1:0);});return copy;}
+  function nearestEvent(){var sorted=orderedEvents(),today=new Date(),i,d;for(i=0;i<sorted.length;i++){d=parseDay(sorted[i].date);if(dateDiff(d,today)>=0)return sorted[i];}return sorted.length?sorted[sorted.length-1]:null;}
+  var today=new Date(),calY=today.getFullYear(),calM=today.getMonth(),selectedDate=dayKey(today),selectedCountdown=-1;
+  function renderCal(){
+    var first=new Date(calY,calM,1),offset=(first.getDay()+6)%7,n=new Date(calY,calM+1,0).getDate(),day=1,r,c,body=el('cal-body');clear(body);
+    txt('month-name',months[calM].charAt(0).toUpperCase()+months[calM].slice(1)+' '+calY);
+    for(r=0;r<6;r++){var tr=make('tr');for(c=0;c<7;c++){var td=make('td');if((r===0&&c<offset)||day>n){td.className='empty';}else{var str=calY+'-'+pad(calM+1)+'-'+pad(day),b=make('button','',day),i,has=false;for(i=0;i<events.length;i++)if(events[i].date===str){has=true;break;}b.type='button';b.className=(str===dayKey(new Date())?' today':'')+(has?' marked':'')+(str===selectedDate?' selected':'');(function(chosen){b.onclick=function(){selectedDate=chosen;el('new-event-date').value=chosen;renderCal();};})(str);td.appendChild(b);day++;}tr.appendChild(td);}body.appendChild(tr);if(day>n)break;}
+    var list=el('cal-events'),ordered=orderedEvents(),j;clear(list);if(!ordered.length)list.appendChild(make('p','muted','Aún no tienes eventos.'));for(j=0;j<ordered.length;j++){var row=make('div','listrow'),name=make('span','text',ordered[j].date+' · '+ordered[j].title),del=make('button','remove','Quitar');(function(e){del.onclick=function(){if(!confirm('¿Eliminar este evento?'))return;var i;for(i=0;i<events.length;i++)if(events[i]===e){events.splice(i,1);break;}saveEvents();renderCal();renderCountdown();renderHome();};})(ordered[j]);row.appendChild(name);row.appendChild(del);list.appendChild(row);}
+  }
+  on('month-prev',function(){calM--;if(calM<0){calM=11;calY--;}renderCal();});
+  on('month-next',function(){calM++;if(calM>11){calM=0;calY++;}renderCal();});
+  on('month-now',function(){var n=new Date();calY=n.getFullYear();calM=n.getMonth();selectedDate=dayKey(n);el('new-event-date').value=selectedDate;renderCal();});
+  on('cal-event-add',function(){var name=trim(el('new-event-title').value),date=trim(el('new-event-date').value);if(!name){alert('Escribe el nombre del evento.');return;}if(!parseDay(date)){alert('Usa una fecha válida con formato AAAA-MM-DD, por ejemplo 2026-12-15.');return;}if(events.length>=80){alert('Máximo 80 eventos.');return;}events.push({title:name.slice(0,100),date:date});saveEvents();el('new-event-title').value='';selectedDate=date;var d=parseDay(date);calY=d.getFullYear();calM=d.getMonth();renderCal();renderCountdown();renderHome();});
+  function renderCountdown(){var list=el('count-list'),display=el('count-display'),sorted=orderedEvents(),i;clear(list);clear(display);if(!sorted.length){display.appendChild(make('p','muted','Añade una fecha desde Calendario.'));return;}if(selectedCountdown<0||selectedCountdown>=sorted.length){selectedCountdown=0;for(i=0;i<sorted.length;i++)if(dateDiff(parseDay(sorted[i].date),new Date())>=0){selectedCountdown=i;break;}}for(i=0;i<sorted.length;i++){var b=make('button','btn small '+(i===selectedCountdown?'':'secondary'),sorted[i].title);(function(index){b.onclick=function(){selectedCountdown=index;renderCountdown();};})(i);list.appendChild(b);}var chosen=sorted[selectedCountdown],delta=dateDiff(parseDay(chosen.date),new Date());display.appendChild(make('h3','',chosen.title));var large=make('div','big-timer',Math.abs(delta));large.style.margin='19px 0 8px';display.appendChild(large);display.appendChild(make('p','muted',delta>0?'días restantes · '+chosen.date:delta===0?'¡Es hoy!':'días desde el evento · '+chosen.date));}
+
+  /* Pantalla inicial vinculada con tareas, hábitos y eventos */
+  function renderHome(){if(!el('home-progress'))return;var i,td=0,hd=0,key=dayKey(new Date()),e=nearestEvent();for(i=0;i<tasks.length;i++)if(tasks[i].done)td++;for(i=0;i<habits.length;i++)if(habits[i].day===key)hd++;txt('home-progress',td+'/'+tasks.length+' tareas · '+hd+'/'+habits.length+' hábitos');txt('home-motivation',tasks.length||habits.length?'Consulta tus pendientes y hábitos cuando quieras.':'Agrega tareas y hábitos para comenzar.');txt('home-event',e?e.title:'Sin eventos programados');if(e){var delta=dateDiff(parseDay(e.date),new Date());txt('home-event-days',delta>0?'En '+delta+' días · '+e.date:delta===0?'¡Es hoy!': 'Fecha pasada · '+e.date);}else txt('home-event-days','Registra un evento en Calendario.');}
+
+  /* Pomodoro configurable: usa Date.now para corregir saltos de intervalo */
+  var pomoCfg=readObj(keys.pomo,{work:25,short:5,long:15,cycle:4});
+  if(!pomoCfg||typeof pomoCfg!=='object')pomoCfg={work:25,short:5,long:15,cycle:4};
+  pomoCfg={work:clamp(pomoCfg.work||25,1,180),short:clamp(pomoCfg.short||5,1,60),long:clamp(pomoCfg.long||15,1,90),cycle:clamp(pomoCfg.cycle||4,2,8)};
+  var pPhase='work',pDone=0,pDuration=pomoCfg.work*60,pLeft=pDuration,pRunning=false,pEnd=0;
+  el('pomo-work').value=pomoCfg.work;el('pomo-short').value=pomoCfg.short;el('pomo-long').value=pomoCfg.long;el('pomo-cycle').value=pomoCfg.cycle;
+  function pRender(){txt('pomo-time',pad(Math.floor(pLeft/60))+':'+pad(pLeft%60));txt('pomo-status',pPhase==='work'?'Trabajo · Sesión '+(pDone+1):(pPhase==='long'?'Descanso largo':'Descanso corto'));txt('pomo-count',pDone+' sesiones de concentración completadas');txt('pomo-start',pRunning?'Pausar':'Iniciar');setPercent('pomo-progress',100*(pDuration-pLeft)/pDuration);}
+  function pNext(){pRunning=false;beep();if(pPhase==='work'){pDone++;pPhase=pDone%pomoCfg.cycle===0?'long':'short';}else pPhase='work';pDuration=(pPhase==='work'?pomoCfg.work:(pPhase==='long'?pomoCfg.long:pomoCfg.short))*60;pLeft=pDuration;pRender();}
+  on('pomo-start',function(){unlockAudio();if(pRunning){pLeft=Math.max(0,Math.ceil((pEnd-Date.now())/1000));pRunning=false;}else{if(pLeft===0)pLeft=pDuration;pEnd=Date.now()+pLeft*1000;pRunning=true;}pRender();});
+  on('pomo-reset',function(){pRunning=false;pLeft=pDuration;pRender();});
+  on('pomo-next',function(){if(!confirm('¿Pasar a la siguiente fase?'))return;pNext();});
+  on('pomo-config',function(){pomoCfg={work:clamp(el('pomo-work').value,1,180),short:clamp(el('pomo-short').value,1,60),long:clamp(el('pomo-long').value,1,90),cycle:clamp(el('pomo-cycle').value,2,8)};saveObj(keys.pomo,pomoCfg);pRunning=false;pDone=0;pPhase='work';pDuration=pomoCfg.work*60;pLeft=pDuration;pRender();alert('Tiempos guardados.');});
+
+  /* Intervalos: siguiente fase automática mientras la aplicación esté abierta */
+  var fitCfg=readObj(keys.fit,{work:40,rest:20,rounds:5});
+  if(!fitCfg||typeof fitCfg!=='object')fitCfg={work:40,rest:20,rounds:5};
+  fitCfg={work:clamp(fitCfg.work||40,5,3600),rest:clamp(fitCfg.rest||20,5,3600),rounds:clamp(fitCfg.rounds||5,1,99)};
+  var fPhase='work',fRound=1,fDuration=fitCfg.work,fLeft=fDuration,fRunning=false,fDone=false,fEnd=0;
+  el('fit-work').value=fitCfg.work;el('fit-rest').value=fitCfg.rest;el('fit-rounds').value=fitCfg.rounds;
+  function fRender(){txt('fit-time',pad(Math.floor(fLeft/60))+':'+pad(fLeft%60));txt('fit-status',fDone?'¡Rutina completada!':(fPhase==='work'?'Actividad':'Descanso')+' · Ronda '+fRound+' de '+fitCfg.rounds);txt('fit-start',fRunning?'Pausar':(fDone?'Volver a empezar':'Iniciar'));setPercent('fit-progress',fDone?100:100*(fDuration-fLeft)/fDuration);}
+  function fReset(){fRunning=false;fDone=false;fRound=1;fPhase='work';fDuration=fitCfg.work;fLeft=fDuration;fRender();}
+  function fNext(){beep();if(fPhase==='work'){if(fRound>=fitCfg.rounds){fDone=true;fRunning=false;fLeft=0;fRender();return;}fPhase='rest';fDuration=fitCfg.rest;}else{fRound++;fPhase='work';fDuration=fitCfg.work;}fLeft=fDuration;if(fRunning)fEnd=Date.now()+fLeft*1000;fRender();}
+  on('fit-start',function(){unlockAudio();if(fDone)fReset();if(fRunning){fLeft=Math.max(0,Math.ceil((fEnd-Date.now())/1000));fRunning=false;}else{fEnd=Date.now()+fLeft*1000;fRunning=true;}fRender();});
+  on('fit-reset',fReset);on('fit-skip',function(){if(fDone)fReset();else fNext();});
+  on('fit-config',function(){fitCfg={work:clamp(el('fit-work').value,5,3600),rest:clamp(el('fit-rest').value,5,3600),rounds:clamp(el('fit-rounds').value,1,99)};saveObj(keys.fit,fitCfg);fReset();alert('Intervalos guardados.');});
+
+  /* Tarjetas: los datos viven en este archivo HTML (funciona sin servicios remotos). */
   var decks={
-    ingles:[['What does “improve” mean?','Mejorar. Example: I want to improve my English.'],['What is a “deadline”?','Fecha límite de entrega.'],['What does “reliable” mean?','Confiable.'],['What is “feedback”?','Retroalimentación.'],['What does “deploy” mean?','Desplegar o poner en funcionamiento un sistema.'],['What does “I am available” mean?','Estoy disponible.'],['What is a “meeting”?','Una reunión.'],['What does “data-driven” mean?','Basado en datos.']],
-    ia:[['¿Qué es machine learning?','Métodos que aprenden patrones a partir de datos.'],['¿Qué es una API?','Una interfaz para que diferentes programas se comuniquen.'],['¿Qué es una variable objetivo?','El valor que un modelo busca predecir.'],['¿Qué significa overfitting?','Ajustarse demasiado a los datos de entrenamiento y generalizar mal.'],['¿Qué es un pipeline?','Una secuencia reproducible de pasos de procesamiento o modelamiento.'],['¿Qué es inferencia?','Usar un modelo entrenado para producir resultados.'],['¿Qué es un LLM?','Un modelo de lenguaje grande entrenado para procesar y generar texto.'],['¿Qué es MLOps?','Prácticas para desplegar, supervisar y mantener sistemas de machine learning.']]
+    ingles:[['What does “improve” mean?','Mejorar. I want to improve my English.'],['What is a deadline?','Una fecha límite de entrega.'],['What does reliable mean?','Confiable.'],['What is feedback?','Retroalimentación o comentarios de mejora.'],['What does deploy mean?','Poner una aplicación o sistema en funcionamiento.'],['What is a meeting?','Una reunión.'],['What does data-driven mean?','Basado en decisiones informadas por datos.'],['What is a stakeholder?','Una persona o grupo interesado en un proyecto.'],['What does scalable mean?','Capaz de crecer sin perder su funcionamiento.'],['How can you say “tengo experiencia en datos”?','I have experience working with data.']],
+    ia:[['¿Qué es inteligencia artificial?','Sistemas que realizan tareas relacionadas con capacidades cognitivas humanas.'],['¿Qué es IA generativa?','Modelos que producen contenido como texto, imágenes o código.'],['¿Qué es un LLM?','Un modelo de lenguaje entrenado para trabajar con secuencias de texto.'],['¿Qué es un token?','Unidad de texto procesada por un modelo de lenguaje.'],['¿Qué es un prompt?','Instrucción o contexto que recibe un modelo.'],['¿Qué es RAG?','Búsqueda de información externa para fundamentar respuestas generadas.'],['¿Qué es un agente de IA?','Un sistema que combina razonamiento, herramientas y acciones para completar tareas.'],['¿Qué es una API?','Una interfaz para que diferentes sistemas se comuniquen.'],['¿Qué es MLOps?','Prácticas para desplegar y mantener modelos de aprendizaje automático.'],['¿Qué es inferencia?','Uso de un modelo ya entrenado para obtener resultados.']],
+    python:[['¿Qué es una lista en Python?','Una colección ordenada y mutable de elementos.'],['¿Qué hace len()?','Devuelve la longitud de un objeto compatible.'],['¿Qué es un diccionario?','Una estructura que asocia claves con valores.'],['¿Qué hace un bucle for?','Itera sobre elementos de una secuencia u otro iterable.'],['¿Qué es una función?','Un bloque reutilizable de instrucciones.'],['¿Qué es pandas?','Una biblioteca de Python para analizar y manipular datos tabulares.'],['¿Qué es un DataFrame?','Una estructura tabular con filas y columnas.'],['¿Qué significa None?','Representa la ausencia de un valor.'],['¿Qué es una excepción?','Un evento de error que puede manejarse durante la ejecución.'],['¿Qué hace train_test_split?','Separa los datos para entrenamiento y evaluación.']],
+    sql:[['¿Para qué sirve SELECT?','Selecciona columnas o expresiones de una consulta.'],['¿Para qué sirve WHERE?','Filtra filas según una condición.'],['¿Qué hace GROUP BY?','Agrupa registros para calcular agregaciones.'],['¿Qué hace ORDER BY?','Ordena los resultados de una consulta.'],['¿Qué es un INNER JOIN?','Combina coincidencias de ambas tablas.'],['¿Qué es un LEFT JOIN?','Conserva todas las filas de la tabla izquierda.'],['¿Qué devuelve COUNT(*)?','Cuenta las filas de un conjunto de resultados.'],['¿Qué hace HAVING?','Filtra grupos después de la agregación.'],['¿Qué es una clave primaria?','Una columna o conjunto que identifica registros de manera única.'],['¿Qué es una CTE?','Una expresión de tabla común definida con WITH.']],
+    ml:[['¿Qué es sobreajuste?','Cuando un modelo aprende detalles del entrenamiento y generaliza mal.'],['¿Qué es validación cruzada?','Evaluación repetida mediante distintas particiones de datos.'],['¿Para qué sirve ROC-AUC?','Mide la capacidad de ordenar positivos por encima de negativos.'],['¿Qué mide recall?','La proporción de positivos reales identificados.'],['¿Qué mide precision?','La proporción de predicciones positivas que son correctas.'],['¿Qué es RMSE?','Raíz del promedio de errores cuadráticos en regresión.'],['¿Qué es un pipeline?','Secuencia reproducible de pasos de preparación y modelamiento.'],['¿Qué es fuga de datos?','Uso indebido de información que no estaría disponible al predecir.'],['¿Qué es regularización?','Técnicas para controlar complejidad y reducir sobreajuste.'],['¿Qué es drift?','Cambio en las distribuciones o relaciones de datos con el tiempo.']]
   };
-  var currentDeck='ingles',cardIdx=0,revealed=false;
-  function renderCard(){var card=decks[currentDeck][cardIdx];changeText('card-question',card[0]);changeText('card-answer',card[1]);byId('card-answer').style.display=revealed?'block':'none';changeText('card-progress',(currentDeck==='ingles'?'Inglés':'Inteligencia artificial')+' · '+(cardIdx+1)+' / '+decks[currentDeck].length);changeText('card-reveal',revealed?'Ocultar respuesta':'Mostrar respuesta');}
-  byId('card-reveal').onclick=function(){revealed=!revealed;renderCard();};
-  byId('card-next').onclick=function(){cardIdx=(cardIdx+1)%decks[currentDeck].length;revealed=false;renderCard();};
-  clickAll('data-deck',function(name){currentDeck=name;cardIdx=0;revealed=false;renderCard();});
-  renderCard();
+  var names={ingles:'Inglés',ia:'Inteligencia artificial',python:'Python',sql:'SQL',ml:'Machine Learning'},deck='ingles',cardIndex=0,revealed=false;
+  function renderCard(){var c=decks[deck][cardIndex];txt('card-progress',names[deck]+' · '+(cardIndex+1)+' de '+decks[deck].length);txt('card-question',c[0]);txt('card-answer',c[1]);el('card-answer').style.display=revealed?'block':'none';txt('card-reveal',revealed?'Ocultar respuesta':'Mostrar respuesta');}
+  bind('data-deck',function(v){deck=v;cardIndex=0;revealed=false;renderCard();});
+  on('card-reveal',function(){revealed=!revealed;renderCard();});on('card-next',function(){cardIndex=(cardIndex+1)%decks[deck].length;revealed=false;renderCard();});
 
-  /* Reloj y cronómetros con actualización simple. */
-  function tick(){
-    if(pRunning){pLeft=Math.max(0,Math.ceil((pEnd-Date.now())/1000));if(pLeft===0)pRunning=false;renderP();}
-    if(fRunning){
-      fLeft=Math.max(0,Math.ceil((fEnd-Date.now())/1000));
-      if(fLeft===0){
-        if(fPhase==='work'){fPhase='rest';fLeft=fR;fEnd=Date.now()+fLeft*1000;}
-        else if(fRound<fTotal){fRound++;fPhase='work';fLeft=fW;fEnd=Date.now()+fLeft*1000;}
-        else{fFinished=true;fRunning=false;}
-      }
-      renderFit();
-    }
-  }
-  setInterval(tick,250);
+  /* Respaldo JSON con verificación; compatible con pegar en iOS antiguo */
+  function backupObject(){return {app:'Mi iPad 360',version:2,exportado:dayKey(new Date()),tasks:tasks,habits:habits,events:events,prefs:prefs,pomo:pomoCfg,fit:fitCfg};}
+  on('backup-generate',function(){el('backup-text').value=JSON.stringify(backupObject(),null,2);txt('backup-status','Respaldo generado. Cópialo y guárdalo en un lugar seguro.');});
+  on('backup-select',function(){var t=el('backup-text');t.focus();t.select();try{t.setSelectionRange(0,t.value.length);}catch(e){}txt('backup-status','Texto seleccionado. Mantén pulsado para copiarlo, o utiliza copiar en tu Mac.');});
+  on('backup-download',function(){var content=el('backup-text').value;if(!content){content=JSON.stringify(backupObject(),null,2);el('backup-text').value=content;}try{var blob=new Blob([content],{type:'application/json;charset=utf-8'}),url=(window.URL||window.webkitURL).createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='mi_ipad_360_respaldo.json';document.body.appendChild(a);a.click();document.body.removeChild(a);txt('backup-status','Descarga solicitada. Si no funciona en Safari antiguo, copia el texto.');}catch(e){txt('backup-status','No se pudo descargar. Selecciona y copia el texto como alternativa.');}});
+  function safePrefs(v){var x={},names=['theme','font','clock','seconds','start','sound'],i;for(i=0;i<names.length;i++)if(v&&typeof v[names[i]]==='string')x[names[i]]=v[names[i]];if(['oceano','ambar','violeta','claro'].indexOf(x.theme)<0)x.theme='oceano';if(['normal','grande'].indexOf(x.font)<0)x.font='normal';if(['12','24'].indexOf(x.clock)<0)x.clock='12';if(['si','no'].indexOf(x.seconds)<0)x.seconds='no';if(panels.indexOf(x.start)<0)x.start='inicio';if(['si','no'].indexOf(x.sound)<0)x.sound='si';return x;}
+  on('backup-import',function(){var v;try{v=JSON.parse(el('backup-text').value);}catch(e){alert('El texto no es un JSON válido.');return;}if(!v||v.app!=='Mi iPad 360'||v.version!==2||!isArray(v.tasks)||!isArray(v.habits)||!isArray(v.events)){alert('Este archivo no parece un respaldo compatible de Mi iPad 360 v2.');return;}if(!confirm('Se reemplazarán las tareas, hábitos, fechas y preferencias guardadas aquí. ¿Continuar?'))return;
+    tasks=safeTasks(v.tasks);habits=safeHabits(v.habits);events=safeEvents(v.events);prefs=safePrefs(v.prefs);pomoCfg={work:clamp(v.pomo&&v.pomo.work||25,1,180),short:clamp(v.pomo&&v.pomo.short||5,1,60),long:clamp(v.pomo&&v.pomo.long||15,1,90),cycle:clamp(v.pomo&&v.pomo.cycle||4,2,8)};fitCfg={work:clamp(v.fit&&v.fit.work||40,5,3600),rest:clamp(v.fit&&v.fit.rest||20,5,3600),rounds:clamp(v.fit&&v.fit.rounds||5,1,99)};
+    saveTasks();saveHabits();saveEvents();saveObj(keys.prefs,prefs);saveObj(keys.pomo,pomoCfg);saveObj(keys.fit,fitCfg);
+    el('pomo-work').value=pomoCfg.work;el('pomo-short').value=pomoCfg.short;el('pomo-long').value=pomoCfg.long;el('pomo-cycle').value=pomoCfg.cycle;
+    el('fit-work').value=fitCfg.work;el('fit-rest').value=fitCfg.rest;el('fit-rounds').value=fitCfg.rounds;
+    pPhase='work';pDone=0;pDuration=pomoCfg.work*60;pLeft=pDuration;pRunning=false;pRender();fReset();showPrefs();applyPrefs();renderTasks();renderHabits();renderCal();renderCountdown();renderHome();txt('backup-status','Respaldo importado correctamente.');
+  });
+
+  /* Inicializar y mantener progreso visual */
+  el('new-event-date').value=selectedDate;
+  renderTasks();renderHabits();renderCal();renderCountdown();pRender();fRender();renderCard();showPrefs();applyPrefs();
+  setInterval(function(){clock();if(dayKey(new Date())!==dayKey(today)){today=new Date();renderHabits();renderCal();renderCountdown();}if(pRunning){pLeft=Math.max(0,Math.ceil((pEnd-Date.now())/1000));if(pLeft===0)pNext();else pRender();}if(fRunning){fLeft=Math.max(0,Math.ceil((fEnd-Date.now())/1000));if(fLeft===0)fNext();else fRender();}},1000);
+  show(pref('start'));
 })();
 </script>
 </body>
