@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Mi iPad 360">
+<meta name="format-detection" content="telephone=no">
+<title>Mi iPad 360 — Dashboard</title>
+<style>
+* { -webkit-box-sizing:border-box; box-sizing:border-box; }
+html { background:#0c1322; }
+body { margin:0; padding:0; font-family:-apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; background:#0c1322; color:#f2f6ff; -webkit-text-size-adjust:100%; }
+button, input { font-family:inherit; font-size:16px; }
+button { cursor:pointer; -webkit-appearance:none; appearance:none; border:0; -webkit-tap-highlight-color:transparent; }
+button:active { opacity:.72; }
+#app { margin:0 auto; max-width:1100px; padding:21px 22px 50px; }
+.header { border-bottom:1px solid #263247; padding-bottom:13px; margin-bottom:18px; }
+.brand { font-size:24px; letter-spacing:-.5px; font-weight:700; }
+.brand small { font-weight:400; font-size:13px; color:#8ba0bd; display:block; letter-spacing:.1px; margin-top:3px; }
+.pill { display:inline-block; color:#a9e6d8; border:1px solid #2d655e; border-radius:22px; font-size:12px; padding:5px 11px; float:right; margin-top:4px; }
+.clear { clear:both; }
+.nav { overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; padding:0 0 8px; margin-bottom:16px; }
+.nav button { border-radius:10px; padding:12px 15px; background:#1b273b; color:#c1d0e4; margin-right:6px; font-size:15px; }
+.nav button.active { background:#35c3a4; color:#08201b; font-weight:700; }
+.panel { display:none; }
+.panel.active { display:block; }
+.card { background:#152136; border:1px solid #26364f; border-radius:17px; padding:21px; margin-bottom:15px; }
+.card h2 { margin:0 0 12px; font-size:23px; }
+.card h3 { font-size:18px; margin:0 0 9px; }
+.muted { color:#a2b4d0; }
+.eyebrow { color:#72d8c3; letter-spacing:1.6px; text-transform:uppercase; font-size:12px; font-weight:700; margin-bottom:9px; }
+.bigclock { font-size:100px; line-height:1.08; font-weight:300; letter-spacing:-4px; color:white; white-space:nowrap; font-variant-numeric:tabular-nums; }
+.ampm { font-size:24px; letter-spacing:0; margin-left:8px; color:#69d7bf; }
+.bigdate { font-size:25px; margin:12px 0 5px; color:#becce1; }
+.fullclock { text-align:center; padding:64px 10px; }
+.fullclock .bigclock { font-size:114px; }
+.fullclock .bigdate { font-size:29px; }
+.tiles { margin:0 -7px; }
+.tile { background:#1a2a42; border:1px solid #304762; color:#f4f8ff; text-align:left; width:31%; width:calc(33.333% - 14px); margin:7px; display:inline-block; vertical-align:top; padding:18px; min-height:114px; border-radius:14px; }
+.tile .symbol { font-size:28px; display:block; margin-bottom:8px; }
+.tile .name { display:block; font-size:18px; font-weight:700; }
+.tile .descr { display:block; font-size:13px; color:#9bb0cd; margin-top:5px; }
+.two-col { margin:0 -7px; }
+.half { display:inline-block; vertical-align:top; width:calc(50% - 14px); margin:7px; }
+.button { background:#35c3a4; color:#0c2620; font-size:17px; font-weight:700; padding:13px 20px; border-radius:10px; margin:4px 7px 4px 0; min-height:48px; }
+.button.subtle { background:#283b55; color:#f2f6ff; }
+.button.danger { background:#523540; color:#ffccd2; }
+.button.small { padding:8px 14px; font-size:15px; min-height:40px; }
+.timer { text-align:center; font-weight:300; font-size:105px; letter-spacing:-4px; margin:12px 0 18px; font-variant-numeric:tabular-nums; }
+.timerlabel { font-size:20px; color:#9be2d2; text-align:center; }
+.center { text-align:center; }
+.input { display:block; width:100%; background:#0e1a2e; color:#f4f8ff; border:1px solid #445671; padding:13px; border-radius:9px; font-size:17px; margin:8px 0 12px; }
+.input:focus { outline:2px solid #38bfa4; }
+.task-row { border-top:1px solid #2a3a52; padding:11px 0; overflow:hidden; }
+.task-row .check { float:left; width:28px; height:28px; margin-right:11px; border-radius:8px; background:#2f435e; border:1px solid #75849a; color:white; font-size:18px; }
+.task-row .check.done { background:#35c3a4; color:#08201b; }
+.task-row .task-text { display:inline-block; max-width:70%; padding-top:3px; word-wrap:break-word; }
+.task-row .task-text.done { text-decoration:line-through; opacity:.55; }
+.task-row .remove { float:right; color:#fdadb7; background:#3c2936; border-radius:9px; padding:7px 11px; font-size:14px; }
+.calhead { text-align:center; font-size:24px; font-weight:700; padding:4px; }
+.calendar { width:100%; border-collapse:separate; border-spacing:5px; table-layout:fixed; }
+.calendar th { color:#8da4c2; font-size:15px; height:30px; }
+.calendar td { background:#1e304a; color:#e7f0ff; text-align:center; height:57px; border-radius:9px; font-size:19px; }
+.calendar td.blank { background:transparent; }
+.calendar td.today { background:#35c3a4; color:#0d2620; font-weight:800; }
+.count-big { font-size:105px; font-weight:300; text-align:center; margin:17px 0; color:#fff; }
+.flashcard { background:#1c3348; border:1px solid #38606c; border-radius:16px; text-align:center; padding:54px 18px; margin:17px auto; min-height:240px; }
+.flashcard .question { font-size:30px; font-weight:700; }
+.flashcard .answer { color:#b4eadd; font-size:24px; line-height:1.4; margin-top:22px; display:none; }
+.footer { color:#7c93b4; font-size:12px; margin-top:20px; text-align:center; line-height:1.55; }
+.hint { background:#243348; border-left:3px solid #37c6a5; padding:13px 15px; border-radius:7px; font-size:15px; color:#cbd8e9; line-height:1.55; }
+#errors { display:none; padding:12px; color:#ffb5b5; }
+@media(max-width:800px) { #app { padding:14px 15px 32px; } .bigclock { font-size:78px; } .fullclock .bigclock { font-size:90px; } .tile { width:calc(50% - 14px); } .timer { font-size:85px; } .card { padding:16px; } .calendar td { height:47px; } }
+@media(max-width:480px) { .bigclock,.fullclock .bigclock { font-size:58px; letter-spacing:-2px; } .bigdate,.fullclock .bigdate { font-size:19px; } .tile { width:calc(100% - 14px); min-height:80px; } .half { width:calc(100% - 14px); } .timer,.count-big { font-size:65px; } .calendar td { height:38px; font-size:15px; } }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <span class="pill">Diseñado para iOS 9</span>
+    <div class="brand">Mi iPad 360 <small>Tu centro personal de productividad</small></div>
+    <div class="clear"></div>
+  </div>
+  <div class="nav" id="nav">
+    <button data-go="inicio" class="active">Inicio</button><button data-go="reloj">Reloj</button><button data-go="pomodoro">Pomodoro</button><button data-go="calendario">Calendario</button><button data-go="tareas">Tareas</button><button data-go="entreno">Entreno</button><button data-go="evento">Cuenta atrás</button><button data-go="tarjetas">Aprender</button>
+  </div>
+  <div id="errors"></div>
+
+  <div class="panel active" id="inicio">
+    <div class="card center">
+      <div class="eyebrow">Panel de escritorio</div>
+      <div class="bigclock" id="home-time">--:--</div>
+      <div class="bigdate" id="home-date">Cargando fecha...</div>
+      <p class="muted">Hora del iPad · No necesita una cuenta</p>
+    </div>
+    <div class="tiles">
+      <button class="tile" data-go="reloj"><span class="symbol">◷</span><span class="name">Reloj grande</span><span class="descr">Pantalla completa</span></button><button class="tile" data-go="pomodoro"><span class="symbol">◴</span><span class="name">Pomodoro</span><span class="descr">Concentración y pausas</span></button><button class="tile" data-go="calendario"><span class="symbol">▦</span><span class="name">Calendario</span><span class="descr">Vista del mes</span></button><button class="tile" data-go="tareas"><span class="symbol">✓</span><span class="name">Mis tareas</span><span class="descr">Lista personal</span></button><button class="tile" data-go="entreno"><span class="symbol">↻</span><span class="name">Entrenamiento</span><span class="descr">Intervalos de ejercicio</span></button><button class="tile" data-go="evento"><span class="symbol">◎</span><span class="name">Cuenta regresiva</span><span class="descr">Próxima fecha especial</span></button><button class="tile" data-go="tarjetas"><span class="symbol">A+</span><span class="name">Aprender</span><span class="descr">Inglés e IA</span></button>
+    </div>
+    <div class="hint" style="margin-top:14px">Tus libros y archivos siguen disponibles desde <strong>iBooks</strong> y <strong>PDFelement</strong>. Puedes volver a ellos con el botón físico de inicio del iPad.</div>
+  </div>
+
+  <div class="panel" id="reloj"><div class="card fullclock">
+    <div class="eyebrow">Reloj de escritorio</div><div class="bigclock" id="big-time">--:--</div><div class="bigdate" id="big-date">Cargando...</div>
+    <p class="muted">La hora se toma del dispositivo.</p>
+  </div></div>
+
+  <div class="panel" id="pomodoro"><div class="card center">
+    <div class="eyebrow">Concentración</div><h2>Temporizador Pomodoro</h2>
+    <div class="timerlabel" id="pomo-label">Trabajo · 25 minutos</div>
+    <div class="timer" id="pomo-time">25:00</div>
+    <button class="button" id="pomo-start">Iniciar</button><button class="button subtle" id="pomo-reset">Reiniciar</button>
+    <div style="margin-top:20px"><button class="button small subtle" data-pomo="25">Trabajo 25 min</button><button class="button small subtle" data-pomo="5">Descanso 5 min</button><button class="button small subtle" data-pomo="15">Descanso 15 min</button></div>
+    <p class="muted">Mantén el panel visible para comprobar el tiempo. Este temporizador no reemplaza las alarmas de la aplicación Reloj.</p>
+  </div></div>
+
+  <div class="panel" id="calendario"><div class="card">
+    <div class="eyebrow">Organiza tus días</div><h2>Calendario mensual</h2>
+    <div class="center"><button class="button small subtle" id="month-prev">◀ Anterior</button><button class="button small subtle" id="month-now">Hoy</button><button class="button small subtle" id="month-next">Siguiente ▶</button></div>
+    <div id="month-name" class="calhead"></div><table class="calendar" id="cal-table"><thead><tr><th>L</th><th>M</th><th>X</th><th>J</th><th>V</th><th>S</th><th>D</th></tr></thead><tbody id="cal-body"></tbody></table>
+    <p class="muted">Es una vista mensual independiente, sin conexión con calendarios externos.</p>
+  </div></div>
+
+  <div class="panel" id="tareas"><div class="card">
+    <div class="eyebrow">Mi organización</div><h2>Lista de tareas</h2>
+    <input class="input" type="text" id="task-input" maxlength="110" placeholder="Escribe una tarea...">
+    <button class="button" id="task-add">+ Añadir tarea</button>
+    <p id="task-summary" class="muted"></p><div id="task-list"></div>
+    <p class="muted">Las tareas se guardan en este navegador cuando permite almacenamiento local. No son una copia de seguridad.</p>
+  </div></div>
+
+  <div class="panel" id="entreno"><div class="card center">
+    <div class="eyebrow">Movimiento y ejercicio</div><h2>Entrenamiento por intervalos</h2>
+    <div class="timerlabel" id="fit-label">Listo · Trabajo 40s / Pausa 20s</div>
+    <div class="timer" id="fit-time">00:40</div>
+    <button class="button" id="fit-start">Iniciar</button><button class="button subtle" id="fit-reset">Reiniciar</button>
+    <div style="margin-top:18px"><label>Segundos de actividad <input type="number" class="input" id="fit-work" min="5" max="600" value="40"></label><label>Segundos de descanso <input type="number" class="input" id="fit-rest" min="5" max="600" value="20"></label><label>Número de rondas <input type="number" class="input" id="fit-rounds" min="1" max="99" value="5"></label></div>
+    <p class="muted">Intervalos visuales para sesiones sencillas. Para alarmas en segundo plano usa la app Reloj del iPad.</p>
+  </div></div>
+
+  <div class="panel" id="evento"><div class="card">
+    <div class="eyebrow">Fechas especiales</div><h2>Cuenta regresiva</h2>
+    <label>Nombre del evento <input type="text" class="input" id="event-title" placeholder="Por ejemplo: Viaje" maxlength="70"></label>
+    <label>Fecha del evento <input type="date" class="input" id="event-date"></label>
+    <button class="button" id="event-save">Guardar evento</button>
+    <div id="event-result" class="center" style="margin-top:18px"></div>
+  </div></div>
+
+  <div class="panel" id="tarjetas"><div class="card center">
+    <div class="eyebrow">Aprende cada día</div><h2>Tarjetas de estudio</h2>
+    <div class="center"><button class="button small subtle" data-deck="ingles">Inglés</button><button class="button small subtle" data-deck="ia">Inteligencia artificial</button></div>
+    <p id="card-progress" class="muted"></p>
+    <div class="flashcard" id="flashcard"><div class="question" id="card-question"></div><div class="answer" id="card-answer"></div></div>
+    <button class="button" id="card-reveal">Mostrar respuesta</button><button class="button subtle" id="card-next">Siguiente ▶</button>
+    <p class="muted">Tarjetas incluidas en el archivo: no necesitas conectarte a ninguna plataforma.</p>
+  </div></div>
+
+  <div class="footer">Mi iPad 360 · Versión 1.0 · Diseño ligero para Safari iOS 9<br>No requiere inicio de sesión, anuncios ni servicios externos.</div>
+</div>
+<script>
+(function () {
+  'use strict';
+  var days = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+  var months = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  function byId(id) { return document.getElementById(id); }
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+  function changeText(id, val) { var el = byId(id); if (el) { el.textContent = val; } }
+  function storageGet(key, fallback) { try { var v = window.localStorage.getItem(key); return v === null ? fallback : v; } catch(e) { return fallback; } }
+  function storageSet(key, val) { try { window.localStorage.setItem(key,val); return true; } catch(e) { return false; } }
+  function formatDate(d) { return days[d.getDay()] + ', ' + d.getDate() + ' de ' + months[d.getMonth()] + ' de ' + d.getFullYear(); }
+  function clock() {
+    var d = new Date(), h = d.getHours(), ampm = h >= 12 ? 'PM' : 'AM';
+    var time = pad(h % 12 || 12) + ':' + pad(d.getMinutes()) + ' <span class="ampm">' + ampm + '</span>';
+    byId('home-time').innerHTML = time; byId('big-time').innerHTML = time;
+    changeText('home-date', formatDate(d)); changeText('big-date', formatDate(d));
+  }
+  function page(name) {
+    var panels = document.getElementsByClassName('panel'), links = byId('nav').getElementsByTagName('button'), i;
+    for (i=0; i<panels.length; i++) panels[i].className = panels[i].className.replace(' active','');
+    for (i=0; i<links.length; i++) links[i].className = links[i].className.replace(' active','');
+    byId(name).className += ' active';
+    for (i=0; i<links.length; i++) if (links[i].getAttribute('data-go') === name) links[i].className += ' active';
+    window.scrollTo(0,0);
+  }
+  function clickAll(attr, fn) {
+    var buttons=document.getElementsByTagName('button'), i, v;
+    for (i=0; i<buttons.length; i++) { v=buttons[i].getAttribute(attr); if (v !== null) { (function(value,el){ el.addEventListener('click',function(){fn(value);},false); })(v,buttons[i]); } }
+  }
+  clickAll('data-go',page);
+  clock(); setInterval(clock,1000);
+
+  /* Temporizador estable: usa tiempo transcurrido y no depende de contar ticks. */
+  var pLeft=1500, pEnd=0, pRunning=false, pMins=25;
+  function renderP() { changeText('pomo-time',pad(Math.floor(pLeft/60))+':'+pad(pLeft%60)); changeText('pomo-label',(pMins===25?'Trabajo':'Descanso')+' · '+pMins+' minutos'); changeText('pomo-start',pRunning?'Pausar':'Iniciar'); }
+  function toggleP() { if(pRunning){pLeft=Math.max(0,Math.ceil((pEnd-Date.now())/1000));pRunning=false;} else {pEnd=Date.now()+pLeft*1000;pRunning=true;} renderP(); }
+  byId('pomo-start').onclick=toggleP;
+  byId('pomo-reset').onclick=function(){pRunning=false;pLeft=pMins*60;renderP();};
+  clickAll('data-pomo',function(v){pMins=parseInt(v,10);pLeft=pMins*60;pRunning=false;renderP();});
+  renderP();
+
+  /* Calendario local simple. */
+  var now = new Date(), calY=now.getFullYear(), calM=now.getMonth();
+  function renderCal() {
+    var first=new Date(calY,calM,1), n=new Date(calY,calM+1,0).getDate(), offset=(first.getDay()+6)%7, html='', date=1, r,c;
+    changeText('month-name',months[calM].charAt(0).toUpperCase()+months[calM].slice(1)+' '+calY);
+    for(r=0;r<6;r++) { html+='<tr>';
+      for(c=0;c<7;c++) { if((r===0 && c<offset)||date>n) html+='<td class="blank"></td>';
+      else { var today = calY===now.getFullYear() && calM===now.getMonth() && date===now.getDate(); html+='<td'+(today?' class="today"':'')+'>'+date+'</td>'; date++; } }
+      html+='</tr>'; if(date>n) break;
+    }
+    byId('cal-body').innerHTML=html;
+  }
+  byId('month-prev').onclick=function(){calM--;if(calM<0){calM=11;calY--;}renderCal();};
+  byId('month-next').onclick=function(){calM++;if(calM>11){calM=0;calY++;}renderCal();};
+  byId('month-now').onclick=function(){now=new Date();calM=now.getMonth();calY=now.getFullYear();renderCal();};
+  renderCal();
+
+  /* Tareas guardadas localmente. */
+  var tasks=[];
+  try { var stored=JSON.parse(storageGet('ipad360_tasks','[]')); if (Object.prototype.toString.call(stored)==='[object Array]') tasks=stored; } catch(e) { tasks=[]; }
+  function saveTasks(){ storageSet('ipad360_tasks',JSON.stringify(tasks)); }
+  function renderTasks() {
+    var target=byId('task-list'), i, row, tick, txt, remove, done=0; target.innerHTML='';
+    for(i=0;i<tasks.length;i++) { if(tasks[i].done)done++;
+      row=document.createElement('div');row.className='task-row';
+      tick=document.createElement('button');tick.className='check'+(tasks[i].done?' done':'');tick.textContent=tasks[i].done?'✓':'';
+      txt=document.createElement('span');txt.className='task-text'+(tasks[i].done?' done':'');txt.textContent=tasks[i].text;
+      remove=document.createElement('button');remove.className='remove';remove.textContent='Quitar';
+      (function(index){tick.onclick=function(){tasks[index].done=!tasks[index].done;saveTasks();renderTasks();};remove.onclick=function(){tasks.splice(index,1);saveTasks();renderTasks();};})(i);
+      row.appendChild(tick);row.appendChild(txt);row.appendChild(remove);target.appendChild(row);
+    }
+    changeText('task-summary',tasks.length ? done+' de '+tasks.length+' tareas completadas' : 'Aún no tienes tareas. Añade la primera.');
+  }
+  function addTask(){var inp=byId('task-input'),value=inp.value.replace(/^\s+|\s+$/g,'');if(!value)return;if(tasks.length>=35){alert('Máximo 35 tareas para mantener el iPad ligero.');return;}tasks.push({text:value,done:false});inp.value='';saveTasks();renderTasks();}
+  byId('task-add').onclick=addTask;
+  byId('task-input').onkeydown=function(e){e=e||window.event;if(e.keyCode===13)addTask();};
+  renderTasks();
+
+  /* Cuenta regresiva: parseo manual para evitar diferencias entre navegadores. */
+  function parseIso(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s);if(!m)return null;var y=+m[1],mo=+m[2],d=+m[3],val=new Date(y,mo-1,d);if(val.getFullYear()!==y||val.getMonth()!==mo-1||val.getDate()!==d)return null;return val;}
+  var eventName=storageGet('ipad360_event_name',''),eventDate=storageGet('ipad360_event_date','');
+  function renderEvent(){var name=eventName,str=eventDate, target=parseIso(str), el=byId('event-result'), today=new Date();today.setHours(0,0,0,0);if(!target){el.innerHTML='<p class="muted">Guarda una fecha para ver cuántos días faltan.</p>';return;}var delta=Math.round((target.getTime()-today.getTime())/86400000);var title=document.createElement('h3'); title.textContent=name||'Tu evento';el.innerHTML='';el.appendChild(title);var count=document.createElement('div');count.className='count-big';count.textContent=Math.abs(delta);el.appendChild(count);var label=document.createElement('p');label.className='muted';label.textContent=delta>0?'Días restantes':delta===0?'¡Hoy es el día!':'Días desde la fecha';el.appendChild(label);}
+  byId('event-title').value=eventName;byId('event-date').value=eventDate;
+  byId('event-save').onclick=function(){var date=byId('event-date').value;if(!parseIso(date)){alert('Selecciona una fecha válida.');return;}eventName=byId('event-title').value;eventDate=date;storageSet('ipad360_event_name',eventName);storageSet('ipad360_event_date',eventDate);renderEvent();};
+  renderEvent();
+
+  /* Intervalos de actividad/descanso con contador de rondas. */
+  var fRunning=false,fLeft=40,fEnd=0,fPhase='work',fRound=1,fTotal=5,fW=40,fR=20,fFinished=false;
+  function fitValue(id,defaultVal,max){var n=parseInt(byId(id).value,10);return isNaN(n)?defaultVal:Math.max(5,Math.min(max,n));}
+  function renderFit(){changeText('fit-time',pad(Math.floor(fLeft/60))+':'+pad(fLeft%60));changeText('fit-label',fFinished?'¡Sesión terminada!':(fPhase==='work'?'Actividad':'Descanso')+' · Ronda '+fRound+' de '+fTotal);changeText('fit-start',fRunning?'Pausar':(fFinished?'Reiniciar e iniciar':'Iniciar'));}
+  function fitReset(){fRunning=false;fFinished=false;fPhase='work';fRound=1;fW=fitValue('fit-work',40,600);fR=fitValue('fit-rest',20,600);fTotal=Math.max(1,Math.min(99,parseInt(byId('fit-rounds').value,10)||5));fLeft=fW;renderFit();}
+  function fitToggle(){if(fFinished)fitReset();if(fRunning){fLeft=Math.max(0,Math.ceil((fEnd-Date.now())/1000));fRunning=false;}else{fEnd=Date.now()+fLeft*1000;fRunning=true;}renderFit();}
+  byId('fit-start').onclick=fitToggle;byId('fit-reset').onclick=fitReset;
+  byId('fit-work').onchange=fitReset;byId('fit-rest').onchange=fitReset;byId('fit-rounds').onchange=fitReset;
+  fitReset();
+
+  /* Tarjetas precargadas: sin APIs ni descargas. */
+  var decks={
+    ingles:[['What does “improve” mean?','Mejorar. Example: I want to improve my English.'],['What is a “deadline”?','Fecha límite de entrega.'],['What does “reliable” mean?','Confiable.'],['What is “feedback”?','Retroalimentación.'],['What does “deploy” mean?','Desplegar o poner en funcionamiento un sistema.'],['What does “I am available” mean?','Estoy disponible.'],['What is a “meeting”?','Una reunión.'],['What does “data-driven” mean?','Basado en datos.']],
+    ia:[['¿Qué es machine learning?','Métodos que aprenden patrones a partir de datos.'],['¿Qué es una API?','Una interfaz para que diferentes programas se comuniquen.'],['¿Qué es una variable objetivo?','El valor que un modelo busca predecir.'],['¿Qué significa overfitting?','Ajustarse demasiado a los datos de entrenamiento y generalizar mal.'],['¿Qué es un pipeline?','Una secuencia reproducible de pasos de procesamiento o modelamiento.'],['¿Qué es inferencia?','Usar un modelo entrenado para producir resultados.'],['¿Qué es un LLM?','Un modelo de lenguaje grande entrenado para procesar y generar texto.'],['¿Qué es MLOps?','Prácticas para desplegar, supervisar y mantener sistemas de machine learning.']]
+  };
+  var currentDeck='ingles',cardIdx=0,revealed=false;
+  function renderCard(){var card=decks[currentDeck][cardIdx];changeText('card-question',card[0]);changeText('card-answer',card[1]);byId('card-answer').style.display=revealed?'block':'none';changeText('card-progress',(currentDeck==='ingles'?'Inglés':'Inteligencia artificial')+' · '+(cardIdx+1)+' / '+decks[currentDeck].length);changeText('card-reveal',revealed?'Ocultar respuesta':'Mostrar respuesta');}
+  byId('card-reveal').onclick=function(){revealed=!revealed;renderCard();};
+  byId('card-next').onclick=function(){cardIdx=(cardIdx+1)%decks[currentDeck].length;revealed=false;renderCard();};
+  clickAll('data-deck',function(name){currentDeck=name;cardIdx=0;revealed=false;renderCard();});
+  renderCard();
+
+  /* Reloj y cronómetros con actualización simple. */
+  function tick(){
+    if(pRunning){pLeft=Math.max(0,Math.ceil((pEnd-Date.now())/1000));if(pLeft===0)pRunning=false;renderP();}
+    if(fRunning){
+      fLeft=Math.max(0,Math.ceil((fEnd-Date.now())/1000));
+      if(fLeft===0){
+        if(fPhase==='work'){fPhase='rest';fLeft=fR;fEnd=Date.now()+fLeft*1000;}
+        else if(fRound<fTotal){fRound++;fPhase='work';fLeft=fW;fEnd=Date.now()+fLeft*1000;}
+        else{fFinished=true;fRunning=false;}
+      }
+      renderFit();
+    }
+  }
+  setInterval(tick,250);
+})();
+</script>
+</body>
+</html>
