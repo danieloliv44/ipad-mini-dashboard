@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Calculadora 360">
+<meta name="format-detection" content="telephone=no">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" type="image/png" href="icon.png">
+<title>Calculadora 360</title>
+<style>
+/* Una aplicación independiente, sin frameworks, compatible con WebKit iOS 9. */
+* { -webkit-box-sizing: border-box; box-sizing: border-box; }
+html { background:#0a1321; }
+body { margin:0; padding:0; background:#0a1321; color:#f4f8ff; font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif; -webkit-text-size-adjust:100%; }
+button { font-family:inherit; -webkit-appearance:none; appearance:none; border:0; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+button:active { opacity:.76; }
+#app { max-width:1050px; margin:0 auto; padding:20px 22px 24px; }
+.header { overflow:hidden; margin-bottom:14px; }
+.title { float:left; font-size:25px; font-weight:700; letter-spacing:-.6px; }
+.title small { color:#a0bbd0; display:block; font-size:13px; font-weight:400; letter-spacing:0; margin-top:3px; }
+.tag { float:right; border:1px solid #2c6c67; color:#79ead6; padding:6px 10px; border-radius:18px; font-size:12px; margin-top:7px; }
+.layout { overflow:hidden; }
+.calc { width:64%; float:left; }
+.sidebar { width:33%; float:right; }
+.card { background:#13243a; border:1px solid #324860; border-radius:18px; padding:17px; }
+.screen { padding:15px 15px 12px; border-radius:12px; background:#0a1929; border:1px solid #29465d; margin-bottom:13px; min-height:124px; }
+.expression { text-align:right; font-size:15px; color:#a9becd; min-height:24px; overflow:hidden; }
+.result { text-align:right; font-size:62px; line-height:1.24; min-height:77px; font-weight:300; letter-spacing:-2px; word-wrap:break-word; }
+.row { font-size:0; margin:0 -4px; }
+.key { display:inline-block; vertical-align:top; width:calc(25% - 8px); height:63px; margin:4px; padding:0; background:#273b54; color:#f1f7ff; border-radius:13px; font-size:25px; font-weight:500; }
+.key.soft { background:#294d5b; color:#b7f4e5; }
+.key.operator { background:#225f65; color:#dcfff6; }
+.key.equal { background:#46d6b8; color:#05251e; font-weight:700; }
+.key.utility { background:#334259; color:#d8e7fa; font-size:19px; }
+.smallkey { height:43px; font-size:15px; background:#203148; }
+.science { width:calc(20% - 8px); font-size:15px; height:48px; color:#b8f5e7; background:#214b52; }
+.section-label { color:#8ea9c5; font-size:11px; letter-spacing:1.8px; text-transform:uppercase; font-weight:700; margin:13px 2px 4px; }
+.side-title { font-weight:700; font-size:18px; margin:3px 0 9px; }
+.side-muted { color:#a3bbd0; font-size:13px; line-height:1.5; }
+.history { margin-top:16px; max-height:325px; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.history-item { border-top:1px solid #314559; padding:10px 1px; font-size:14px; word-wrap:break-word; color:#d7e9f5; }
+.hnumber { display:block; font-size:20px; color:#77dfcc; margin-top:5px; }
+.clean { margin-top:12px; display:inline-block; color:#cbe4f4; background:#2a4059; border-radius:8px; padding:10px 13px; font-size:14px; }
+.notice { color:#99b0c6; font-size:12px; margin:12px 4px 0; line-height:1.5; }
+.footer { text-align:center; color:#768fa9; font-size:11px; margin:12px 0 0; }
+@media(max-width:850px) {
+ #app { padding:13px 15px 20px; }
+ .calc,.sidebar { float:none; width:100%; }
+ .sidebar { margin-top:13px; }
+ .history { max-height:180px; }
+ .key { height:67px; }
+ .smallkey { height:42px; }
+ .science { height:48px; }
+}
+@media(max-width:500px) {
+ #app { padding:11px 10px; }
+ .title { font-size:20px; }
+ .tag { font-size:10px; padding:6px; }
+ .card { padding:12px; border-radius:13px; }
+ .screen { min-height:110px; padding:12px; }
+ .result { font-size:48px; min-height:65px; }
+ .key { height:60px; font-size:23px; }
+ .smallkey { height:39px; font-size:13px; }
+ .science { height:43px; font-size:12px; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <div class="title">Calculadora 360<small>Independiente · Diseñada para tu iPad mini</small></div>
+    <div class="tag">Safari iOS 9</div>
+  </div>
+  <div class="layout">
+    <div class="calc">
+      <div class="card">
+        <div class="screen" aria-live="polite">
+          <div class="expression" id="expression">Lista para calcular</div>
+          <div class="result" id="display">0</div>
+        </div>
+        <div class="section-label">Memoria</div>
+        <div class="row">
+          <button class="key smallkey" data-action="mc">MC</button><button class="key smallkey" data-action="mr">MR</button><button class="key smallkey" data-action="mplus">M+</button><button class="key smallkey" data-action="mminus">M−</button>
+        </div>
+        <div class="section-label">Funciones rápidas</div>
+        <div class="row">
+          <button class="key science" data-action="sqrt">√</button><button class="key science" data-action="square">x²</button><button class="key science" data-action="inverse">1/x</button><button class="key science" data-action="vatplus">+ IVA</button><button class="key science" data-action="vatminus">− IVA</button>
+        </div>
+        <div class="section-label">Operaciones</div>
+        <div class="row">
+          <button class="key utility" data-action="clear">AC</button><button class="key utility" data-action="percent">%</button><button class="key utility" data-action="sign">±</button><button class="key operator" data-action="op" data-value="/">÷</button>
+        </div>
+        <div class="row">
+          <button class="key" data-action="digit" data-value="7">7</button><button class="key" data-action="digit" data-value="8">8</button><button class="key" data-action="digit" data-value="9">9</button><button class="key operator" data-action="op" data-value="*">×</button>
+        </div>
+        <div class="row">
+          <button class="key" data-action="digit" data-value="4">4</button><button class="key" data-action="digit" data-value="5">5</button><button class="key" data-action="digit" data-value="6">6</button><button class="key operator" data-action="op" data-value="-">−</button>
+        </div>
+        <div class="row">
+          <button class="key" data-action="digit" data-value="1">1</button><button class="key" data-action="digit" data-value="2">2</button><button class="key" data-action="digit" data-value="3">3</button><button class="key operator" data-action="op" data-value="+">+</button>
+        </div>
+        <div class="row">
+          <button class="key utility" data-action="back">⌫</button><button class="key" data-action="digit" data-value="0">0</button><button class="key" data-action="decimal">,</button><button class="key equal" data-action="equals">=</button>
+        </div>
+      </div>
+    </div>
+    <div class="sidebar">
+      <div class="card">
+        <div class="side-title">Historial</div>
+        <div class="side-muted">Tus últimas operaciones se guardan en este navegador mientras sus datos no se borren.</div>
+        <div class="history" id="history"></div>
+        <button class="clean" id="clear-history">Borrar historial</button>
+        <p class="notice">Porcentaje: 250 + 10 % = 275. El IVA utiliza la tasa colombiana general del 19 % como ejemplo. «− IVA» divide entre 1,19 para retirar un IVA incluido.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer">Calculadora 360 v1.0 · Sin cuentas, anuncios ni bibliotecas externas</div>
+</div>
+<script>
+(function () {
+  'use strict';
+  var current = '0', stored = null, pending = null, fresh = false, hasError = false;
+  var memory = 0, history = [];
+  var byId = function(id){ return document.getElementById(id); };
+  function save(key, val) { try { window.localStorage.setItem(key, JSON.stringify(val)); } catch(e) {} }
+  function load(key, fallback) { try { var s=window.localStorage.getItem(key); return s === null ? fallback : JSON.parse(s); } catch(e) { return fallback; } }
+  var savedMem=load('calculadora360-mem', 0);
+  if(typeof savedMem==='number' && isFinite(savedMem)) memory=savedMem;
+  var savedHist=load('calculadora360-history', []);
+  if(Object.prototype.toString.call(savedHist)==='[object Array]') history=savedHist.slice(0,12);
+  function normalized(n) {
+    if(!isFinite(n)) return null;
+    if(Math.abs(n)>1e15) return null;
+    if(Math.abs(n)<1e-11 && n!==0) return String(Number(n.toPrecision(8)));
+    return String(Number(n.toPrecision(12)));
+  }
+  function pretty(s) {
+    if(s==='Error') return 'Error';
+    var t=String(s), sign='', parts, a, i;
+    if(t.charAt(0)==='-'){sign='−';t=t.slice(1);}
+    if(t.indexOf('e')>=0){return sign + t.replace('.', ',');}
+    parts=t.split('.');a=parts[0];
+    a=a.replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+    return sign+a+(parts.length>1?','+parts[1]:'');
+  }
+  function show(label) {
+    byId('display').textContent=pretty(current);
+    if(label!==undefined) byId('expression').textContent=label;
+    var d=byId('display'), len=d.textContent.length;
+    d.style.fontSize=(len>14?'32px':len>11?'43px':len>9?'50px':'');
+  }
+  function opSymbol(op){ return op==='*'?'×':op==='/'?'÷':op==='-'?'−':op; }
+  function setError(label) {
+    current='Error';pending=null;stored=null;hasError=true;fresh=true;show(label||'No se puede calcular');
+  }
+  function setNumber(n,label) {
+    var s=normalized(n);if(s===null){setError('Resultado no válido');return false;}
+    current=s;hasError=false;fresh=true;show(label);return true;
+  }
+  function append(d) {
+    if(hasError){clearAll();}
+    if(fresh){current=d;fresh=false;}
+    else if(current==='0'){current=d;}
+    else if(current.replace(/[-.]/g,'').length<13){current+=d;}
+    show();
+  }
+  function decimal() {
+    if(hasError){clearAll();}
+    if(fresh){current='0.';fresh=false;}
+    else if(current.indexOf('.')<0){current+='.';}
+    show();
+  }
+  function clearAll(){current='0';stored=null;pending=null;fresh=false;hasError=false;show('Lista para calcular');}
+  function back(){if(hasError){clearAll();return;}if(fresh){current='0';fresh=false;}else{current=current.length>1?current.slice(0,-1):'0';if(current==='-'||current==='')current='0';}show();}
+  function sign(){if(hasError)return;if(Number(current)===0)return;current=current.charAt(0)==='-'?current.slice(1):'-'+current;fresh=false;show();}
+  function operate(a,b,op){if(op==='+')return a+b;if(op==='-')return a-b;if(op==='*')return a*b;if(op==='/')return b===0?NaN:a/b;return NaN;}
+  function addHistory(text,result){history.unshift({text:text,result:pretty(result)});history=history.slice(0,12);save('calculadora360-history',history);renderHistory();}
+  function chooseOperator(op){
+    if(hasError)return;
+    if(pending!==null && !fresh){
+      var n=operate(stored,Number(current),pending);
+      if(!setNumber(n,'Resultado parcial'))return;
+      stored=Number(current);
+    } else if(stored===null)stored=Number(current);
+    pending=op;fresh=true;show(pretty(String(stored))+' '+opSymbol(op));
+  }
+  function equals(){
+    if(hasError||pending===null||stored===null)return;
+    var a=stored,b=Number(current),operator=pending,n=operate(a,b,operator),left=pretty(String(a)),right=pretty(String(b));
+    if(!setNumber(n,left+' '+opSymbol(operator)+' '+right+' ='))return;
+    addHistory(left+' '+opSymbol(operator)+' '+right, current);
+    stored=null;pending=null;fresh=true;
+  }
+  function percent(){
+    if(hasError)return;
+    var n=Number(current);
+    if(pending!==null && stored!==null && (pending==='+'||pending==='-')) n=stored*n/100;
+    else n=n/100;
+    setNumber(n,'Porcentaje calculado');fresh=false;
+  }
+  function unary(kind){
+    if(hasError)return;
+    var x=Number(current), n, label;
+    if(kind==='sqrt'){n=x<0?NaN:Math.sqrt(x);label='√('+pretty(current)+')';}
+    if(kind==='square'){n=x*x;label='('+pretty(current)+')²';}
+    if(kind==='inverse'){n=x===0?NaN:1/x;label='1 / '+pretty(current);}
+    if(kind==='vatplus'){n=x*1.19;label=pretty(current)+' + IVA 19 %';}
+    if(kind==='vatminus'){n=x/1.19;label=pretty(current)+' sin IVA incluido';}
+    if(!setNumber(n,label))return;
+    addHistory(label,current);
+  }
+  function mem(kind){
+    if(kind==='mc'){memory=0;save('calculadora360-mem',memory);show('Memoria borrada');return;}
+    if(kind==='mr'){setNumber(memory,'Valor recuperado de memoria');fresh=true;return;}
+    if(hasError)return;
+    if(kind==='mplus')memory+=Number(current);
+    if(kind==='mminus')memory-=Number(current);
+    save('calculadora360-mem',memory);show('Memoria: '+pretty(normalized(memory)||'0'));
+  }
+  function renderHistory(){
+    var root=byId('history');while(root.firstChild)root.removeChild(root.firstChild);
+    if(!history.length){var blank=document.createElement('div');blank.className='side-muted';blank.textContent='Todavía no hay operaciones.';root.appendChild(blank);return;}
+    for(var i=0;i<history.length;i++){
+      var el=document.createElement('div'),v=document.createElement('span');el.className='history-item';
+      el.appendChild(document.createTextNode(history[i].text+' ='));
+      v.className='hnumber';v.textContent=history[i].result;el.appendChild(v);root.appendChild(el);
+    }
+  }
+  function action(name,value){
+    if(name==='digit')append(value);
+    else if(name==='decimal')decimal();
+    else if(name==='clear')clearAll();
+    else if(name==='back')back();
+    else if(name==='sign')sign();
+    else if(name==='percent')percent();
+    else if(name==='op')chooseOperator(value);
+    else if(name==='equals')equals();
+    else if(name==='mc'||name==='mr'||name==='mplus'||name==='mminus')mem(name);
+    else if(name==='sqrt'||name==='square'||name==='inverse'||name==='vatplus'||name==='vatminus')unary(name);
+  }
+  var buttons=document.getElementsByTagName('button');
+  for(var i=0;i<buttons.length;i++){
+    var a=buttons[i].getAttribute('data-action'), v=buttons[i].getAttribute('data-value');
+    if(a!==null){(function(x,y,b){b.onclick=function(){action(x,y);};})(a,v,buttons[i]);}
+  }
+  byId('clear-history').onclick=function(){history=[];save('calculadora360-history',history);renderHistory();};
+  document.addEventListener('keydown',function(e){
+    var k=e.key||'', supported=true;
+    if(/^[0-9]$/.test(k))action('digit',k);
+    else if(k==='.'||k===',')action('decimal');
+    else if(k==='+'||k==='-'||k==='*'||k==='/')action('op',k);
+    else if(k==='='||k==='Enter')action('equals');
+    else if(k==='Backspace')action('back');
+    else if(k==='Escape')action('clear');
+    else if(k==='%')action('percent');
+    else supported=false;
+    if(supported){e.preventDefault();}
+  },false);
+  show('Lista para calcular');renderHistory();
+})();
+</script>
+</body>
+</html>
